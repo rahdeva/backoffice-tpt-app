@@ -1,0 +1,60 @@
+const Map<String, String> id = {
+  // Bottom Nav Bar
+  'txt_bottomnav_dashboard': 'Dasbor',
+  'txt_bottomnav_setting': 'Pengaturan',
+  'txt_bottomnav_past_ticket': 'Tiket Sebelumnya',
+
+  // Login
+  'txt_flow_login_welcome': 'Selamat Datang 🙌',
+  'txt_flow_login_sign_in': 'Masuk ke akun Anda!',
+  'txt_flow_login_email': 'Email',
+  'txt_flow_login_enter_email': 'Masukan email Anda',
+  'txt_flow_login_password': 'Password',
+  'txt_flow_login_enter_password': 'Masukan Password Anda',
+  'txt_flow_login_language': 'Bahasa',
+  'txt_flow_login_forgot_password': 'Lupa Password?',
+  'txt_flow_login_enter': 'Masuk',
+  'txt_flow_login_indonesian': 'Bahasa Indonesia',
+  'txt_flow_login_english': 'English',
+  'txt_flow_login_save': 'Simpan',
+
+  // Forgot Password
+  'txt_flow_forgotpass_back': 'Kembali',
+  'txt_flow_forgotpass_title': 'Lupa Password ❤️‍🩹',
+  'txt_flow_forgotpass_instructions': 'Tetap santai! Silakan masukkan alamat email yang terkait dengan pendaftaran Anda, dan kami akan segera mengirimkan kode verifikasi kepada Anda.',
+  'txt_flow_forgotpass_email': 'Email',
+  'txt_flow_forgotpass_input_email': 'Input email',
+  'txt_flow_forgotpass_send_code': 'Kirim Kode',
+  'txt_flow_forgotpass_check_email': 'Cek inbox email anda!',
+  'txt_flow_forgotpass_sent_code': 'Kami telah mengirimkan kode ke',
+  'txt_flow_forgotpass_enter_code': 'Silakan masukkan kode 4 digit yang diberikan kepada Anda.',
+  'txt_flow_forgotpass_resend_code': 'Kirim Ulang Kode',
+  'txt_flow_forgotpass_verification': 'Verifikasi',
+  'txt_flow_forgotpass_create_password': 'Buat password baru',
+  'txt_flow_forgotpass_password_instructions': 'Harap pastikan bahwa Anda mengingat kata sandi baru Anda untuk penggunaan di masa mendatang. 😃',
+  'txt_flow_forgotpass_input_new_password': 'Masukan Password baru',
+  'txt_flow_forgotpass_enter_password': 'Masukan password',
+  'txt_flow_forgotpass_reenter_new_password': 'Masukan ulang Password baru',
+  'txt_flow_forgotpass_reenter_password': 'Ulang masukan Password',
+  'txt_flow_forgotpass_password_min_chars': 'Minimal 8 karakter',
+  'txt_flow_forgotpass_reset_password': 'Reset Password',
+  'txt_flow_forgotpass_password_changed': 'Password anda telah berhasil di ubah.',
+  'txt_flow_forgotpass_return_to_login': 'Kembali ke Menu Login',
+
+  // Logout
+  'txt_flow_logout_resources': 'Sumber Daya',
+  'txt_flow_logout_rate_app': 'Nilai Aplikasi di',
+  'txt_flow_logout_contact_us': 'Hubungi Kami',
+  'txt_flow_logout_log_out': 'Keluar',
+  'txt_flow_logout_confirmation': 'Konfirmasi',
+  'txt_flow_logout_confirm_logout': 'Apakah anda yakin untuk keluar?',
+  'txt_flow_logout_yes_logout': 'Ya, Keluar',
+  'txt_flow_logout_cancel': 'Batal',
+
+  // Validation
+  'txt_valid_email': 'Format email masih salah',
+  'txt_valid_password': 'Minimal password adalah 6 karakter',
+  'txt_valid_name': 'Silahkan masukkan Nama anda',
+  'txt_valid_number': 'Silahkan masukkan nomer yang benar',
+  'txt_valid_notEmpty': 'Kolom tidak boleh kosong',
+};

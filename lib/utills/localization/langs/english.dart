@@ -1,0 +1,60 @@
+const Map<String, String> en = {
+  // Bottom Nav Bar
+  'txt_bottomnav_dashboard': 'Dashboard',
+  'txt_bottomnav_setting': 'Setting',
+  'txt_bottomnav_past_ticket': 'Past Ticket',
+
+  // Login
+  'txt_flow_login_welcome': "Let's get Started 🙌",
+  'txt_flow_login_sign_in': 'Sign in into your Account',
+  'txt_flow_login_email': 'Email',
+  'txt_flow_login_enter_email': 'Enter your email',
+  'txt_flow_login_password': 'Password',
+  'txt_flow_login_enter_password': 'Enter your password',
+  'txt_flow_login_language': 'Language',
+  'txt_flow_login_forgot_password': 'Forgot Password?',
+  'txt_flow_login_enter': 'Enter',
+  'txt_flow_login_indonesian': 'Indonesian',
+  'txt_flow_login_english': 'English',
+  'txt_flow_login_save': 'Save',
+
+  // Forgot Pass
+  'txt_flow_forgotpass_back': 'Back',
+  'txt_flow_forgotpass_title': 'Password Recovery ❤️‍🩹',
+  'txt_flow_forgotpass_instructions': 'Stay relaxed! Please enter the email address associated with your registration, and we\'ll send you a verification code promptly.',
+  'txt_flow_forgotpass_email': 'Email',
+  'txt_flow_forgotpass_input_email': 'Input email',
+  'txt_flow_forgotpass_send_code': 'Send Code',
+  'txt_flow_forgotpass_check_email': 'Check your Email Box!',
+  'txt_flow_forgotpass_sent_code': 'We have sent a code to',
+  'txt_flow_forgotpass_enter_code': 'Please enter the 4-digit code that was provided to you.',
+  'txt_flow_forgotpass_resend_code': 'Resend Code',
+  'txt_flow_forgotpass_verification': 'Verification',
+  'txt_flow_forgotpass_create_password': 'Create a new password',
+  'txt_flow_forgotpass_password_instructions': 'Please ensure that you remember your new password for future use. 😃',
+  'txt_flow_forgotpass_input_new_password': 'Enter a new password',
+  'txt_flow_forgotpass_enter_password': 'Enter password',
+  'txt_flow_forgotpass_reenter_new_password': 'Re-enter the new password',
+  'txt_flow_forgotpass_reenter_password': 'Re-enter Password',
+  'txt_flow_forgotpass_password_min_chars': 'Minimum 8 characters',
+  'txt_flow_forgotpass_reset_password': 'Reset Password',
+  'txt_flow_forgotpass_password_changed': 'Your password has been successfully changed.',
+  'txt_flow_forgotpass_return_to_login': 'Return to Login Menu',
+
+  // Logout
+  'txt_flow_logout_resources': 'Resources',
+  'txt_flow_logout_rate_app': 'Rate this App on',
+  'txt_flow_logout_contact_us': 'Contact Us',
+  'txt_flow_logout_log_out': 'Log Out',
+  'txt_flow_logout_confirmation': 'Confirmation',
+  'txt_flow_logout_confirm_logout': 'Are you sure to logout?',
+  'txt_flow_logout_yes_logout': 'Yes, Logout',
+  'txt_flow_logout_cancel': 'Cancel',
+
+  // Validation
+  'txt_valid_email': 'Please enter a valid email address.',
+  'txt_valid_password': 'Password must be at least 6 characters.',
+  'txt_valid_name': 'Please enter a name.',
+  'txt_valid_number': 'Please enter a number.',
+  'txt_valid_notEmpty': 'This is a required field.',
+};
