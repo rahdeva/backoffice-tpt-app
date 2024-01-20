@@ -24,6 +24,10 @@ class $LibResourcesGen {
 class $LibResourcesImagesGen {
   const $LibResourcesImagesGen();
 
+  /// File path: lib/resources/images/bg-login.png
+  AssetGenImage get bgLogin =>
+      const AssetGenImage('lib/resources/images/bg-login.png');
+
   /// File path: lib/resources/images/empty_state_code.png
   AssetGenImage get emptyStateCode =>
       const AssetGenImage('lib/resources/images/empty_state_code.png');
@@ -43,10 +47,6 @@ class $LibResourcesImagesGen {
   /// File path: lib/resources/images/ic_home_unactive.png
   AssetGenImage get icHomeUnactive =>
       const AssetGenImage('lib/resources/images/ic_home_unactive.png');
-
-  /// File path: lib/resources/images/ic_logo_suitcore_main.png
-  AssetGenImage get icLogoSuitcoreMain =>
-      const AssetGenImage('lib/resources/images/ic_logo_suitcore_main.png');
 
   /// File path: lib/resources/images/ic_notif_active.png
   AssetGenImage get icNotifActive =>
@@ -78,12 +78,12 @@ class $LibResourcesImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        bgLogin,
         emptyStateCode,
         icActivityActive,
         icActivityUnactive,
         icHomeActive,
         icHomeUnactive,
-        icLogoSuitcoreMain,
         icNotifActive,
         icNotifUnactive,
         icProfileActive,
@@ -158,7 +158,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 

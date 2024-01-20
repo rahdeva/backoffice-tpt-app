@@ -77,7 +77,7 @@ class TextFieldWidget extends StatelessWidget {
           color: AppColors.gray500
         ),
         labelStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-          color: AppColors.blue,
+          color: AppColors.primary,
           fontWeight: FontWeight.w600
         ),
         errorStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -86,21 +86,21 @@ class TextFieldWidget extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: const BorderSide(
-            color: AppColors.blue, 
+            color: AppColors.primary, 
             width: 1
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: const BorderSide(
-            color: AppColors.blue, 
+            color: AppColors.primary, 
             width: 1
           )
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: const BorderSide(
-            color: AppColors.blue, 
+            color: AppColors.primary, 
             width: 1
           )
         ),
@@ -114,7 +114,7 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: const BorderSide(
-            color: AppColors.blue, 
+            color: AppColors.primary, 
             width: 2
           )
         ),
