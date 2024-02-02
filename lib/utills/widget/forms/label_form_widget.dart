@@ -5,9 +5,13 @@ class LabelFormWidget extends StatelessWidget {
   const LabelFormWidget({
     super.key, 
     required this.labelText,
+    this.fontSize,
+    this.fontWeight,
   });
 
   final String labelText;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,9 @@ class LabelFormWidget extends StatelessWidget {
       child: Text(
         labelText,
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: AppColors.black
+          fontSize: fontSize ?? 12,
+          color: AppColors.black,
+          fontWeight: fontWeight ?? FontWeight.w500,
         ),
       ),
     );

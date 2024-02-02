@@ -3,9 +3,8 @@
 class PageName {
   static const LOADER = "/loader";
   static const LOGIN = "/login";
-  static const NAVTAB = "/nav-tab";
+  static const MAIN = "/main";
   static const HOME = "/home";
-  static const MY_EMPLOYEE = "/my-employee";
-  static const NOTIFICATION = "/notification"; 
-  static const PROFILE = "/profile";
+  static const HISTORY = "/history";
+  static const SETTING = "/setting";
 }

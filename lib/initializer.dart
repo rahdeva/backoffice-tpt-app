@@ -1,3 +1,5 @@
+import 'package:backoffice_tpt_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -8,10 +10,13 @@ import 'feature/auth/auth_controller.dart';
 class Initializer {
   static Future<void> init() async {
     try {
+      await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+      );
       _initScreenPreference();
       await GetStorage.init(StorageName.STORAGE_NAME);
       await Get.putAsync<FlutterSecureStorage>(() async {
-        return FlutterSecureStorage();
+        return const FlutterSecureStorage();
       });
       Get.put<AuthController>(AuthController());
     } catch (err) {

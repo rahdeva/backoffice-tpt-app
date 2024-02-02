@@ -11,13 +11,13 @@ enum AppType {
 }
 
 class AuthState extends Equatable {
-  final User? user;
+  final UserData? user;
   final AppType appStatus;
 
   const AuthState({this.user, this.appStatus = AppType.INITIAL});
 
   AuthState copyWith({
-    User? user,
+    UserData? user,
     AppType? appStatus,
   }) {
     return AuthState(

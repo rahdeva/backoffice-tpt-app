@@ -40,7 +40,7 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 30.w,
+                          width: 80.w,
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -70,7 +70,7 @@ class LoginPage extends StatelessWidget {
                                   const SizedBox(height: 24),
                                   Text(
                                     "Login to your Account",
-                                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w500
                                     ),
@@ -80,28 +80,46 @@ class LoginPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 50),
                               const LabelFormWidget(
-                                labelText: "Email"
+                                labelText: "Email",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
                               ),
                               TextFieldWidget(
                                 name: 'email',
-                                // label: 'Username',
-                                validator: Validator.required(),
-                                keyboardType: TextInputType.text,
+                                hintText: "Enter your email",
+                                validator: Validator.list([
+                                  Validator.required(),
+                                  Validator.email(),
+                                ]),
+                                keyboardType: TextInputType.emailAddress,
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 borderRadius: 10,
+                                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w400
+                                ),
                               ),
                               const SizedBox(height: 16),
                               const LabelFormWidget(
-                                labelText: "Password"
+                                labelText: "Password",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
                               ),
                               TextFieldWidget(
                                 name: 'password',
-                                // label: 'Password',
+                                hintText: "Enter your password",
                                 obsecure: controller.isObscure,
-                                validator: Validator.required(),
+                                validator: Validator.list([
+                                  Validator.required(),
+                                  Validator.password(),
+                                ]),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 keyboardType: TextInputType.text,
                                 borderRadius: 10,
+                                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w400
+                                ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
                                     controller.isObscure = !controller.isObscure;
@@ -127,7 +145,7 @@ class LoginPage extends StatelessWidget {
                                     controller.formKey.currentState != null &&
                                     controller.formKey.currentState!.saveAndValidate()
                                   ){
-                                    controller.signInWithEmailAndPassword(
+                                    controller.loginWithEmailAndPassword(
                                       controller.formKey.currentState!.fields['email']!.value,
                                       controller.formKey.currentState!.fields['password']!.value,
                                     );

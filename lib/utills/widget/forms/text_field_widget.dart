@@ -22,6 +22,7 @@ class TextFieldWidget extends StatelessWidget {
     this.floatingLabelBehavior, 
     this.contentPadding, 
     this.hintStyle, 
+    this.textStyle, 
     this.inputFormatters, 
   }) : super(key: key);
 
@@ -30,6 +31,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? label;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final TextStyle? textStyle;
   final TextStyle? hintStyle;
   final bool enabled;
   final bool filled;
@@ -56,7 +58,7 @@ class TextFieldWidget extends StatelessWidget {
       keyboardType: keyboardType,
       onChanged: onChanged,
       autocorrect: false,
-      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+      style: textStyle ?? Theme.of(context).textTheme.bodyMedium!.copyWith(
         color: AppColors.black,
         fontWeight: FontWeight.w400
       ),

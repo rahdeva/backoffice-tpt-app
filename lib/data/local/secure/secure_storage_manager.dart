@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class SecureStorageManager {
   static FlutterSecureStorage secureStorage = Get.find<FlutterSecureStorage>();
-  String _tokenKey = "token";
+  final String _tokenKey = "token";
 
   // Token
   //

@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
+import 'package:backoffice_tpt_app/feature/main/main_binding.dart';
+import 'package:backoffice_tpt_app/feature/main/main_page.dart';
+import 'package:backoffice_tpt_app/feature/history/history_page.dart';
 import 'package:backoffice_tpt_app/feature/home/home_page.dart';
-import 'package:backoffice_tpt_app/feature/my_employee/my_employee_page.dart';
-import 'package:backoffice_tpt_app/feature/notification/notification_page.dart';
-import 'package:backoffice_tpt_app/feature/profile/profile_page.dart';
-import '/feature/bottom_nav_bar/nav_tab_binding.dart';
-import '/feature/bottom_nav_bar/nav_tab_page.dart';
+import 'package:backoffice_tpt_app/feature/setting/setting_page.dart';
 import '/feature/loader/loading_page.dart';
 import '/feature/login/login_binding.dart';
 import '/feature/login/login_page.dart';
@@ -23,25 +22,25 @@ class PageRoutes {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: PageName.NAVTAB,
-      page: () => const NavTabPage(),
-      binding: NavTabBinding()
+      name: PageName.MAIN,
+      page: () => const MainPage(),
+      binding: MainBinding()
     ),
     GetPage(
       name: PageName.HOME,
       page: () => const HomePage(),
     ),
     GetPage(
-      name: PageName.MY_EMPLOYEE,
-      page: () => const MyEmployeePage(),
+      name: PageName.HISTORY,
+      page: () => const HistoryPage(),
     ),
     GetPage(
-      name: PageName.NOTIFICATION,
-      page: () => const NotificationPage(),
+      name: PageName.SETTING,
+      page: () => const SettingPage(),
     ),
-    GetPage(
-      name: PageName.PROFILE,
-      page: () => const ProfilePage(),
-    ),
+    // GetPage(
+    //   name: PageName.NOTIFICATION,
+    //   page: () => const NotificationPage(),
+    // ),
   ];
 }

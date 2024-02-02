@@ -4,25 +4,49 @@ import '/resources/resources.dart';
 class AppTheme {
   static ThemeData buildThemeData(bool darkMode, BuildContext context) {
     return ThemeData(
-      primaryColor: AppColors.blue,
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: AppColors.white,
+      // brightness: Brightness.dark,
+      canvasColor: AppColors.red,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      appBarTheme: lightAppBar(),
+      appBarTheme: (darkMode) ? darkAppBar() : lightAppBar(),
       fontFamily: 'DMSans',
+      primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: (darkMode) 
+        ? AppColors.background1
+        : AppColors.white,
+      inputDecorationTheme: inputDecoration(darkMode, context), 
+      colorScheme: ThemeData().colorScheme.copyWith(
+        primary: AppColors.primary,
+        secondary: AppColors.colorSecondary,
+      ).copyWith(
+        background: (darkMode) ? AppColors.black : AppColors.white
+      ),
+      scrollbarTheme: const ScrollbarThemeData().copyWith(
+        thumbColor: MaterialStateProperty.all(AppColors.white),
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.blue,
+          backgroundColor: AppColors.primary,
         )
       ),
       radioTheme: RadioThemeData(
         fillColor: MaterialStateColor.resolveWith(
-          (states) => AppColors.blue
+          (states) => AppColors.primary
         ),
       ),
-      bottomNavigationBarTheme: lightNavigation(),
+      cardTheme: CardTheme(
+        color: AppColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8)
+        ),
+        surfaceTintColor: AppColors.white,
+        clipBehavior: Clip.hardEdge,
+        elevation: 0,
+      ),
+      bottomNavigationBarTheme: (darkMode) 
+        ? darkNavigation() 
+        : lightNavigation(),
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 24,
@@ -80,12 +104,6 @@ class AppTheme {
           color: AppColors.black,
         ),
       ),
-      inputDecorationTheme: inputDecoration(darkMode, context), 
-      colorScheme: ThemeData().colorScheme.copyWith(
-        primary: AppColors.blue,
-      ).copyWith(
-        background: (darkMode) ? AppColors.black : AppColors.white
-      ),
     );
   }
 
@@ -138,26 +156,26 @@ class AppTheme {
       filled: true,
       fillColor: Colors.grey[50],
       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      suffixIconColor: AppColors.blue,
-      prefixIconColor: AppColors.blue,
+      suffixIconColor: AppColors.primary,
+      prefixIconColor: AppColors.primary,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(
-          color: AppColors.blue, 
+          color: AppColors.primary, 
           width: 1
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(
-          color: AppColors.blue, 
+          color: AppColors.primary, 
           width: 1
         )
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(
-          color: AppColors.blue, 
+          color: AppColors.primary, 
           width: 1
         )
       ),
@@ -171,7 +189,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(
-          color: AppColors.blue, 
+          color: AppColors.primary, 
           width: 2
         )
       ),
@@ -183,7 +201,7 @@ class AppTheme {
         ),
       ),
       labelStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-        color: AppColors.blue,
+        color: AppColors.primary,
         fontWeight: FontWeight.w600
       ),
       hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(

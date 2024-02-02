@@ -20,9 +20,9 @@ class AuthController extends GetxController {
   var storage = StorageManager();
   var secureStorage = SecureStorageManager();
 
-  User? get user {
+  UserData? get user {
     if (storage.has(StorageName.USERS)) {
-      return User.fromJson(storage.get(StorageName.USERS));
+      return UserData.fromJson(storage.get(StorageName.USERS));
     } else {
       return null;
     }
@@ -49,7 +49,7 @@ class AuthController extends GetxController {
       await clearData();
       Get.offAllNamed(PageName.LOGIN);
     } else if (state?.appStatus == AppType.AUTHENTICATED) {
-      Get.offAllNamed(PageName.NAVTAB);
+      Get.offAllNamed(PageName.MAIN);
     } else {
       Get.toNamed(PageName.LOADER);
     }
@@ -69,7 +69,7 @@ class AuthController extends GetxController {
     await secureStorage.setToken(value: '');
   }
 
-  Future<void> saveAuthData({required User user, required String token}) async {
+  Future<void> saveAuthData({required UserData user, required String token}) async {
     await storage.write(StorageName.USERS, user.toJson());
     await secureStorage.setToken(value: token);
   }

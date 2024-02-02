@@ -1,53 +1,101 @@
+// To parse this JSON data, do
+//
+//     final userResponse = userResponseFromJson(jsonString);
+
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+UserResponse userResponseFromJson(String str) => UserResponse.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+String userResponseToJson(UserResponse data) => json.encode(data.toJson());
 
-class User {
-    int? userId;
-    int? roleId;
-    String? username;
-    int? userableId;
-    String? userableName;
-    int? pnkId;
-    String? photoUrl;
-    String? accessToken;
-    String? refreshToken;
+class UserResponse {
+    Data? data;
+    String? error;
 
-    User({
-        this.userId,
-        this.roleId,
-        this.username,
-        this.userableId,
-        this.userableName,
-        this.pnkId,
-        this.photoUrl,
-        this.accessToken,
-        this.refreshToken,
+    UserResponse({
+        this.data,
+        this.error,
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory UserResponse.fromJson(Map<String, dynamic> json) => UserResponse(
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        error: json["error"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "data": data?.toJson(),
+        "error": error,
+    };
+}
+
+class Data {
+    UserData? user;
+
+    Data({
+        this.user,
+    });
+
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        user: json["user"] == null ? null : UserData.fromJson(json["user"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "user": user?.toJson(),
+    };
+}
+
+class UserData {
+    int? userId;
+    int? roleId;
+    String? roleName;
+    String? uid;
+    String? name;
+    String? email;
+    String? address;
+    String? phoneNumber;
+    String? profilePicture;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+
+    UserData({
+        this.userId,
+        this.roleId,
+        this.roleName,
+        this.uid,
+        this.name,
+        this.email,
+        this.address,
+        this.phoneNumber,
+        this.profilePicture,
+        this.createdAt,
+        this.updatedAt,
+    });
+
+    factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         userId: json["user_id"],
         roleId: json["role_id"],
-        username: json["username"],
-        userableId: json["userable_id"],
-        userableName: json["userable_name"],
-        pnkId: json["pnk_id"],
-        photoUrl: json["photo_url"],
-        accessToken: json["access_token"],
-        refreshToken: json["refresh_token"],
+        roleName: json["role_name"],
+        uid: json["uid"],
+        name: json["name"],
+        email: json["email"],
+        address: json["address"],
+        phoneNumber: json["phone_number"],
+        profilePicture: json["profile_picture"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
     );
 
     Map<String, dynamic> toJson() => {
         "user_id": userId,
         "role_id": roleId,
-        "username": username,
-        "userable_id": userableId,
-        "userable_name": userableName,
-        "pnk_id": pnkId,
-        "photo_url": photoUrl,
-        "access_token": accessToken,
-        "refresh_token": refreshToken,
+        "role_name": roleName,
+        "uid": uid,
+        "name": name,
+        "email": email,
+        "address": address,
+        "phone_number": phoneNumber,
+        "profile_picture": profilePicture,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
     };
 }

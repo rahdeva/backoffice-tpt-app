@@ -1,4 +1,4 @@
-package com.example.backoffice_tpt_app
+package com.rahdeva.backoffice_tpt_app
 
 import io.flutter.embedding.android.FlutterActivity
 

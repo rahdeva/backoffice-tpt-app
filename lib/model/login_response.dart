@@ -12,7 +12,7 @@ LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.d
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
-    User? data;
+    UserData? data;
     ErrorResponse? error;
 
     LoginResponse({
@@ -21,7 +21,7 @@ class LoginResponse {
     });
 
     factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-        data: json["data"] == null ? null : User.fromJson(json["data"]),
+        data: json["data"] == null ? null : UserData.fromJson(json["data"]),
         error: json["error"],
     );
 

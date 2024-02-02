@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "57783405919",
+    "project_id": "toko-perlengkapan-ternak",
+    "storage_bucket": "toko-perlengkapan-ternak.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57783405919:android:c3db320275fa47600dfaea",
+        "android_client_info": {
+          "package_name": "com.rahdeva.backoffice_tpt_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpToyl2vIwAw2YDQOvjALim4FAqw7evYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57783405919:android:ce2c56fbcc0d88540dfaea",
+        "android_client_info": {
+          "package_name": "com.rahdeva.pos_tpt_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpToyl2vIwAw2YDQOvjALim4FAqw7evYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
