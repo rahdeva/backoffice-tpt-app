@@ -1,10 +1,10 @@
 import 'package:backoffice_tpt_app/feature/product/product_controller.dart';
-import 'package:backoffice_tpt_app/feature/product/widgets/product_data_table.dart';
+import 'package:backoffice_tpt_app/feature/product/widgets/product_header_widget.dart';
+import 'package:backoffice_tpt_app/feature/product/widgets/product_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/responsive.dart';
-import 'package:backoffice_tpt_app/utills/widget/table/data_column_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class ProductPage extends StatelessWidget {
           child: Container(
             width: 100.w,
             height: 100.h,
-            margin: const EdgeInsets.fromLTRB(24, 40, 0, 0),
+            margin: const EdgeInsets.fromLTRB(24, 24, 0, 0),
             decoration: const BoxDecoration(
               color: AppColors.background2,
               borderRadius: BorderRadius.only(
@@ -45,116 +45,15 @@ class ProductPage extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
-                        height: 100.h-40,
+                        height: 100.h-24,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Daftar Produk",
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            // SizedBox(
-                            //   width: 20.w,
-                            //   child: TextFieldWidget(
-                            //     name: "Search", 
-                            //     hintText: "Search",
-                            //     filled: true,
-                            //     keyboardType: TextInputType.text,
-                            //     contentPadding: const EdgeInsets.symmetric(
-                            //       horizontal: 12, 
-                            //       vertical: 12
-                            //     ),
-                            //     prefixIcon: const Icon(
-                            //       Icons.search,
-                            //     ),
-                            //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            //       color: AppColors.colorPrimary
-                            //     ),
-                            //   ),
-                            // ),
-                            // const SizedBox(height: 24),
-                            Expanded(
-                              // height: 70.h,
-                              child: (controller.isLoading)
-                                ? const Center(child: CircularProgressIndicator())
-                                : Scrollbar(
-                                    thumbVisibility: true,
-                                    child: SingleChildScrollView(
-                                      controller: controller.scrollController,
-                                      child: Container(
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                                        padding: const EdgeInsets.only(right: 24),
-                                        width: double.infinity,
-                                        child: Theme(
-                                          data: ThemeData(
-                                            cardTheme: Theme.of(context).cardTheme,
-                                            textTheme: TextTheme(
-                                              bodySmall: Theme.of(context).textTheme.titleSmall
-                                            )
-                                          ),
-                                          child: PaginatedDataTable(
-                                            key: controller.tableKey,
-                                            columnSpacing : 0,
-                                            rowsPerPage: controller.pageSize.value,
-                                            availableRowsPerPage: const [10, 25, 50],
-                                            headingRowHeight: 46,
-                                            onRowsPerPageChanged: (value) {
-                                              controller.onRowsPerPageChanged(value!);
-                                            },
-                                            onPageChanged: (value) {
-                                              controller.onPageChanged(value);
-                                            },
-                                            headingRowColor: MaterialStateProperty.resolveWith(
-                                              (states) => AppColors.primary
-                                            ),
-                                            columns: [
-                                              dataColumnWidget(
-                                                context, labelText: "No"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Kode Produk"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Kategori"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Nama Produk"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Merk"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Harga Beli"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Harga Jual"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Stok"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Terjual"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Aksi"
-                                              ),
-                                            ],
-                                            source: ProductDataSource(
-                                              data: controller.dataList,
-                                              controller: controller,
-                                              context: context
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ),
-                            ),
+                            ProductHeaderWidget(controller: controller),
+                            const SizedBox(height: 8),
+                            const Divider(color: AppColors.white),
+                            const SizedBox(height: 8),
+                            ProductTableWidget(controller: controller),
                           ],
                         ),
                       ),

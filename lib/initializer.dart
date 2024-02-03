@@ -1,4 +1,6 @@
 import 'package:backoffice_tpt_app/firebase_options.dart';
+import 'package:backoffice_tpt_app/routes/page_routes.dart';
+import 'package:backoffice_tpt_app/utills/helper/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,6 +21,7 @@ class Initializer {
         return const FlutterSecureStorage();
       });
       Get.put<AuthController>(AuthController());
+      Utils.initializedSideMenu(bindings: PageRoutes.sideMenuBindings);
     } catch (err) {
       rethrow;
     }

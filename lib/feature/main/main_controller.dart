@@ -1,3 +1,16 @@
+import 'package:backoffice_tpt_app/feature/category/category_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_financial/dashboard_financial_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_forecasting/dashboard_forecasting_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_transaction/dashboard_transaction_page.dart';
+import 'package:backoffice_tpt_app/feature/home/home_page.dart';
+import 'package:backoffice_tpt_app/feature/product/product_page.dart';
+import 'package:backoffice_tpt_app/feature/report_financial/report_financial_page.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_page.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/report_sale_page.dart';
+import 'package:backoffice_tpt_app/feature/setting/setting_page.dart';
+import 'package:backoffice_tpt_app/feature/supplier/supplier_page.dart';
+import 'package:backoffice_tpt_app/feature/user/user_page.dart';
+import 'package:backoffice_tpt_app/utills/helper/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:backoffice_tpt_app/model/user.dart';
 
@@ -9,11 +22,42 @@ class MainController extends GetxController {
   static MainController find = Get.find();
   final AuthController authController = AuthController.find;
   UserData? get user => authController.user;
-  var tabIndex = 0;
+  int tabIndex = 0;
+  List<int> historyIndex = [];
+
+  @override
+  void onInit() {
+    Utils.loadSideMenuBinding(tabIndex);
+    super.onInit();
+  }
+
+  List<Widget> pageView = [
+    const HomePage(),
+    const SettingPage(),
+    const ProductPage(),
+    const CategoryPage(),
+    const SupplierPage(),
+    const UserPage(),
+    const SaleReportPage(),
+    const PurchaseReportPage(),
+    const FinancialReportPage(),
+    const TransactionDashboardPage(),
+    const FinancialDashboardPage(),
+    const ForecastingDashboardPage(),
+  ];
 
   void changeTabIndex(int index) {
+    if (tabIndex != index) {
+      if (index != 0) {
+        historyIndex.add(index);
+      } else if (index == 0) {
+        historyIndex.clear();
+      }
+      Utils.unloadSideMenuBinding(tabIndex);
+      Utils.loadSideMenuBinding(index);
+    }
     tabIndex = index;
-    update();
+    update(['content', 'side-menu']);
   }
 }
 

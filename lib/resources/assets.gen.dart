@@ -32,38 +32,6 @@ class $LibResourcesImagesGen {
   AssetGenImage get emptyStateCode =>
       const AssetGenImage('lib/resources/images/empty_state_code.png');
 
-  /// File path: lib/resources/images/ic_activity_active.png
-  AssetGenImage get icActivityActive =>
-      const AssetGenImage('lib/resources/images/ic_activity_active.png');
-
-  /// File path: lib/resources/images/ic_activity_unactive.png
-  AssetGenImage get icActivityUnactive =>
-      const AssetGenImage('lib/resources/images/ic_activity_unactive.png');
-
-  /// File path: lib/resources/images/ic_home_active.png
-  AssetGenImage get icHomeActive =>
-      const AssetGenImage('lib/resources/images/ic_home_active.png');
-
-  /// File path: lib/resources/images/ic_home_unactive.png
-  AssetGenImage get icHomeUnactive =>
-      const AssetGenImage('lib/resources/images/ic_home_unactive.png');
-
-  /// File path: lib/resources/images/ic_notif_active.png
-  AssetGenImage get icNotifActive =>
-      const AssetGenImage('lib/resources/images/ic_notif_active.png');
-
-  /// File path: lib/resources/images/ic_notif_unactive.png
-  AssetGenImage get icNotifUnactive =>
-      const AssetGenImage('lib/resources/images/ic_notif_unactive.png');
-
-  /// File path: lib/resources/images/ic_profile_active.png
-  AssetGenImage get icProfileActive =>
-      const AssetGenImage('lib/resources/images/ic_profile_active.png');
-
-  /// File path: lib/resources/images/ic_profile_unactive.png
-  AssetGenImage get icProfileUnactive =>
-      const AssetGenImage('lib/resources/images/ic_profile_unactive.png');
-
   /// File path: lib/resources/images/img_empty.png
   AssetGenImage get imgEmpty =>
       const AssetGenImage('lib/resources/images/img_empty.png');
@@ -76,25 +44,25 @@ class $LibResourcesImagesGen {
   AssetGenImage get imgHomePolygon =>
       const AssetGenImage('lib/resources/images/img_home_polygon.png');
 
+  /// File path: lib/resources/images/lottie_failed.json
+  String get lottieFailed => 'lib/resources/images/lottie_failed.json';
+
+  /// File path: lib/resources/images/lottie_success.json
+  String get lottieSuccess => 'lib/resources/images/lottie_success.json';
+
   /// File path: lib/resources/images/user_placeholder.png
   AssetGenImage get userPlaceholder =>
       const AssetGenImage('lib/resources/images/user_placeholder.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
         bgLogin,
         emptyStateCode,
-        icActivityActive,
-        icActivityUnactive,
-        icHomeActive,
-        icHomeUnactive,
-        icNotifActive,
-        icNotifUnactive,
-        icProfileActive,
-        icProfileUnactive,
         imgEmpty,
         imgError,
         imgHomePolygon,
+        lottieFailed,
+        lottieSuccess,
         userPlaceholder
       ];
 }

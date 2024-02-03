@@ -45,7 +45,7 @@ class GridItems extends StatelessWidget {
           icon == null 
           ? const SizedBox()
           : Container(
-            margin: const EdgeInsets.only(right: 16, top: 16),
+            margin: EdgeInsets.only(right: 16, top: index == 2 ? 24 : 16),
             child: Align(
                 alignment: Alignment.topRight,
                   child: icon,
