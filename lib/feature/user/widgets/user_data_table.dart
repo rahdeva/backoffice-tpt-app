@@ -1,8 +1,7 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
+import 'package:backoffice_tpt_app/model/all_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +13,7 @@ class UserDataSource extends DataTableSource {
     required this.context,
   });
   
-  final List<Sale> data;
+  final List<AllUser> data;
   final UserController controller;
   final BuildContext context;
 
@@ -45,30 +44,31 @@ class UserDataSource extends DataTableSource {
         ),
         DataCell(
           Text(
-            "${DateFormat("dd/MM/yyyy HH:mm").format(item.saleDate!)} WITA",
+            item.roleName ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            item.totalItem.toString(),
+            item.name ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            NumberFormat.currency(
-              locale: 'id', 
-              decimalDigits: 0,
-              symbol: "Rp "
-            ).format(item.totalPrice),
-            maxLines: 1,
+            item.email ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            item.userName ?? "-",
+            item.phoneNumber ?? "-",
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.address ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),

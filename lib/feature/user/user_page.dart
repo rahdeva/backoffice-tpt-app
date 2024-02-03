@@ -102,6 +102,7 @@ class UserPage extends StatelessWidget {
                                             rowsPerPage: controller.pageSize.value,
                                             availableRowsPerPage: const [10, 25, 50],
                                             headingRowHeight: 46,
+                                            columnSpacing : 0,
                                             onRowsPerPageChanged: (value) {
                                               controller.onRowsPerPageChanged(value!);
                                             },
@@ -116,16 +117,19 @@ class UserPage extends StatelessWidget {
                                                 context, labelText: "No"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Tanggal"
+                                                context, labelText: "Role"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Item"
+                                                context, labelText: "Nama User"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Price"
+                                                context, labelText: "Email"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "User"
+                                                context, labelText: "No Telepon"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Alamat"
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Aksi"

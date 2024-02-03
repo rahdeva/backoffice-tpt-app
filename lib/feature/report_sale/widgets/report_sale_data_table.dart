@@ -1,5 +1,6 @@
 import 'package:backoffice_tpt_app/feature/report_sale/report_sale_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:backoffice_tpt_app/model/sale.dart';
@@ -104,6 +105,8 @@ class SaleReportDataSource extends DataTableSource {
                   ), 
                   onPressed: () {},
                 ),
+                const SizedBox(width: 12),
+                
               ],
             ),
           ),

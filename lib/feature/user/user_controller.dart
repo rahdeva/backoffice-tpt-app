@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:backoffice_tpt_app/model/all_user.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 
 class UserController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
@@ -14,7 +14,7 @@ class UserController extends GetxController {
   final scrollController = ScrollController();
   bool isLoading = false;
 
-  List<Sale> dataList = [];
+  List<AllUser> dataList = [];
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
@@ -23,7 +23,7 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    getSalesHistory();
+    getAllUsers();
     super.onInit();
   }
 
@@ -32,7 +32,7 @@ class UserController extends GetxController {
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getSalesHistory();
+    getAllUsers();
   }
 
   void onPageChanged(value){
@@ -52,7 +52,7 @@ class UserController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getSalesHistory(page: page.value);
+    getAllUsers(page: page.value);
   }
   
   void refreshPage() async {
@@ -60,31 +60,31 @@ class UserController extends GetxController {
     page.value = 1;
     pageSize.value = 10;
     formKey.currentState!.reset();
-    getSalesHistory();
+    getAllUsers();
     update();
   }
 
-  void getSalesHistory({
+  void getAllUsers({
     String? searchKeyword,
     int page = 1,
   }) async {
     isLoading = true;
     final dio = await AppDio().getDIO();
-    SaleResponse? saleResponse;
+    AllUserResponse? userResponse;
 
     try {
-      final productData = await dio.get(
-        "${BaseUrlLocal.sale}?&pageSize=${pageSize.value}&page=$page",
+      final usersData = await dio.get(
+        "${BaseUrlLocal.user}?&pageSize=${pageSize.value}&page=$page",
       );
-      debugPrint('Products: ${productData.data}');
-      saleResponse = SaleResponse.fromJson(productData.data);
+      debugPrint('Products: ${usersData.data}');
+      userResponse = AllUserResponse.fromJson(usersData.data);
       if(loadNext.value == true){
-        dataList.addAll(saleResponse.data!.sale ?? []); 
+        dataList.addAll(userResponse.data!.user ?? []); 
         loadNext.value = false;
       } else{
-        dataList = saleResponse.data!.sale ?? [];
+        dataList = userResponse.data!.user ?? [];
       }
-      totalItems.value = saleResponse.data!.meta!.totalItems!;
+      totalItems.value = userResponse.data!.meta!.totalItems!;
     } on DioError catch (error) {
       debugPrint(error.toString());
     }
