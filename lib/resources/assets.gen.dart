@@ -72,6 +72,10 @@ class $LibResourcesImagesGen {
   AssetGenImage get imgError =>
       const AssetGenImage('lib/resources/images/img_error.png');
 
+  /// File path: lib/resources/images/img_home_polygon.png
+  AssetGenImage get imgHomePolygon =>
+      const AssetGenImage('lib/resources/images/img_home_polygon.png');
+
   /// File path: lib/resources/images/user_placeholder.png
   AssetGenImage get userPlaceholder =>
       const AssetGenImage('lib/resources/images/user_placeholder.png');
@@ -90,6 +94,7 @@ class $LibResourcesImagesGen {
         icProfileUnactive,
         imgEmpty,
         imgError,
+        imgHomePolygon,
         userPlaceholder
       ];
 }

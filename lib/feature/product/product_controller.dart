@@ -27,15 +27,15 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  void onRowsPerPageChanged(value){
+  void onRowsPerPageChanged(value) async {
     pageSize.value = value;
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getAllProducts();
+    await getAllProducts();
   }
 
-  void onPageChanged(value){
+  void onPageChanged(value) async {
     if(value == 1){
       page.value = 1;
     } else{
@@ -52,7 +52,7 @@ class ProductController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getAllProducts(page: page.value);
+    await getAllProducts(page: page.value);
   }
   
   void refreshPage() async {
@@ -64,7 +64,7 @@ class ProductController extends GetxController {
     update();
   }
 
-  void getAllProducts({
+  Future<void> getAllProducts({
     String? searchKeyword,
     int page = 1,
   }) async {
