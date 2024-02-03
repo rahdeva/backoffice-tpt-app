@@ -1,7 +1,16 @@
+import 'package:backoffice_tpt_app/feature/category/category_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_financial/dashboard_financial_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_forecasting/dashboard_forecasting_page.dart';
+import 'package:backoffice_tpt_app/feature/dashboard_transaction/dashboard_transaction_page.dart';
+import 'package:backoffice_tpt_app/feature/product/product_page.dart';
+import 'package:backoffice_tpt_app/feature/report_financial/report_financial_page.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_sale_page.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/report_sale_page.dart';
+import 'package:backoffice_tpt_app/feature/supplier/supplier_page.dart';
+import 'package:backoffice_tpt_app/feature/user/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/feature/main/widgets/side_menu.dart';
-import 'package:backoffice_tpt_app/feature/history/history_page.dart';
 import 'package:backoffice_tpt_app/utills/helper/responsive.dart';
 import '/feature/home/home_page.dart';
 import '../setting/setting_page.dart';
@@ -34,8 +43,17 @@ class MainPage extends StatelessWidget {
                     index: controller.tabIndex,
                     children: const [
                       HomePage(),
-                      HistoryPage(),
                       SettingPage(),
+                      ProductPage(),
+                      CategoryPage(),
+                      SupplierPage(),
+                      UserPage(),
+                      SaleReportPage(),
+                      PurchaseReportPage(),
+                      FinancialReportPage(),
+                      TransactionDashboardPage(),
+                      FinancialDashboardPage(),
+                      ForecastingDashboardPage(),
                     ],
                   ),
                 ),

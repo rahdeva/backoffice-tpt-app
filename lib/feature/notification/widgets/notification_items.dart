@@ -1,15 +1,15 @@
+import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:intl/intl.dart';
 import 'package:backoffice_tpt_app/feature/notification/notification_controller.dart';
-import 'package:backoffice_tpt_app/model/barang.dart';
 import '/resources/resources.dart';
 import 'package:sizer/sizer.dart';
 
 class NotificationListItem extends StatelessWidget {
   final int index;
   final NotificationController controller;
-  final Barang mData;
+  final Product mData;
 
   const NotificationListItem({
     Key? key, 
@@ -44,8 +44,8 @@ class NotificationListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                mData.id != null
-                ? mData.id.toString()
+                mData.productId != null
+                ? mData.productId.toString()
                 : "-",
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -55,8 +55,8 @@ class NotificationListItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                mData.kodeBarang != null && mData.kodeBarang != ""
-                ? mData.kodeBarang!
+                mData.productCode != null && mData.productCode != ""
+                ? mData.productCode!
                 : "-",
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -66,8 +66,8 @@ class NotificationListItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                mData.namaBarang != null && mData.namaBarang != ""
-                ? mData.namaBarang!
+                mData.productName != null && mData.productName != ""
+                ? mData.productName!
                 : "-",
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(

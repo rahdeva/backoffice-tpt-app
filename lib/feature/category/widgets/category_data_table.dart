@@ -1,21 +1,21 @@
+import 'package:backoffice_tpt_app/feature/category/category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/feature/history/history_controller.dart';
 import 'package:backoffice_tpt_app/model/sale.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:sizer/sizer.dart';
 
-class SalesHistoryDataSource extends DataTableSource {
-  SalesHistoryDataSource({
+class CategoryDataSource extends DataTableSource {
+  CategoryDataSource({
     required this.data,
     required this.controller,
     required this.context,
   });
   
   final List<Sale> data;
-  final HistoryController controller;
+  final CategoryController controller;
   final BuildContext context;
 
   @override

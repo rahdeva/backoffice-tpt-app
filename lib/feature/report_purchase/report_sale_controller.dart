@@ -8,7 +8,7 @@ import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
 import 'package:backoffice_tpt_app/model/sale.dart';
 
-class HistoryController extends GetxController {
+class PurchaseReportController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   final tableKey = GlobalKey<PaginatedDataTableState>();
   final scrollController = ScrollController();

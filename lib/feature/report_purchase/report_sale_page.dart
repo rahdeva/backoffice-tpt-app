@@ -1,18 +1,18 @@
+import 'package:backoffice_tpt_app/feature/report_purchase/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/widgets/report_sale_data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:backoffice_tpt_app/feature/history/history_controller.dart';
-import 'package:backoffice_tpt_app/feature/history/widgets/history_data_table.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/responsive.dart';
 import 'package:backoffice_tpt_app/utills/widget/table/data_column_widget.dart';
 import 'package:sizer/sizer.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+class PurchaseReportPage extends StatelessWidget {
+  const PurchaseReportPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HistoryController>(
+    return GetBuilder<PurchaseReportController>(
       builder: (controller) {
         return SafeArea(
           child: Container(
@@ -131,7 +131,7 @@ class HistoryPage extends StatelessWidget {
                                                 context, labelText: "Aksi"
                                               ),
                                             ],
-                                            source: SalesHistoryDataSource(
+                                            source: PurchaseReportDataSource(
                                               data: controller.dataList,
                                               controller: controller,
                                               context: context

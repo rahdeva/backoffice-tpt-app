@@ -1,8 +1,8 @@
+import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
-import 'package:backoffice_tpt_app/model/barang.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NotificationController extends GetxController {
@@ -11,7 +11,7 @@ class NotificationController extends GetxController {
 
   Rx<int> page = Rx(1);
 
-  List<Barang> dataList = [];
+  List<Product> dataList = [];
   
   @override
   void onInit() {
@@ -38,15 +38,15 @@ class NotificationController extends GetxController {
         }
       ),
     );
-    BarangResponse? notificationResponse;
+    ProductResponse? notificationResponse;
 
     try {
       final notifiationRequest = await dio.get(
         BaseUrlLocal.product
       );
       debugPrint('Notification: ${notifiationRequest.data}');
-      notificationResponse = BarangResponse.fromJson(notifiationRequest.data);
-      dataList = notificationResponse.data ?? [];
+      notificationResponse = ProductResponse.fromJson(notifiationRequest.data);
+      dataList = notificationResponse.data?.product ?? [];
     } on DioError catch (error) {
       debugPrint(error.toString());
     }
