@@ -78,7 +78,7 @@ class CategoryDataSource extends DataTableSource {
                   width: 5.w,
                   customColors: AppColors.red,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "Print", 
+                  buttonText: "Delete", 
                   withIcon: true,
                   icon: const Icon(
                     IconlyLight.delete,

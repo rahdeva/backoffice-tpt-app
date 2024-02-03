@@ -116,16 +116,13 @@ class SupplierPage extends StatelessWidget {
                                                 context, labelText: "No"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Tanggal"
+                                                context, labelText: "Nama Supplier"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Item"
+                                                context, labelText: "No Telepon"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Price"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "User"
+                                                context, labelText: "Alamat"
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Aksi"

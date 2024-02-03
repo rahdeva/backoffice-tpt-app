@@ -1,8 +1,7 @@
 import 'package:backoffice_tpt_app/feature/supplier/supplier_controller.dart';
+import 'package:backoffice_tpt_app/model/supplier.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +13,7 @@ class SupplierDataSource extends DataTableSource {
     required this.context,
   });
   
-  final List<Sale> data;
+  final List<Supplier> data;
   final SupplierController controller;
   final BuildContext context;
 
@@ -45,30 +44,19 @@ class SupplierDataSource extends DataTableSource {
         ),
         DataCell(
           Text(
-            "${DateFormat("dd/MM/yyyy HH:mm").format(item.saleDate!)} WITA",
+            item.supplierName ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            item.totalItem.toString(),
+            item.phoneNumber ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            NumberFormat.currency(
-              locale: 'id', 
-              decimalDigits: 0,
-              symbol: "Rp "
-            ).format(item.totalPrice),
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyMedium
-          )
-        ),
-        DataCell(
-          Text(
-            item.userName ?? "-",
+            item.address ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
@@ -79,26 +67,21 @@ class SupplierDataSource extends DataTableSource {
               children: [
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.blue,
+                  customColors: AppColors.orange,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "View", 
+                  buttonText: "Edit", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.pink,
+                  customColors: AppColors.red,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "Print", 
+                  buttonText: "Delete", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.print,
+                  icon: const Icon(
+                    IconlyLight.delete,
                     color: AppColors.white,
                     size: 16,
                   ), 

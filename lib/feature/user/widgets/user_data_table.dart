@@ -1,6 +1,6 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:backoffice_tpt_app/model/sale.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
@@ -79,26 +79,21 @@ class UserDataSource extends DataTableSource {
               children: [
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.blue,
+                  customColors: AppColors.orange,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "View", 
+                  buttonText: "Edit", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.pink,
+                  customColors: AppColors.red,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "Print", 
+                  buttonText: "Delete", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.print,
+                  icon: const Icon(
+                    IconlyLight.delete,
                     color: AppColors.white,
                     size: 16,
                   ), 

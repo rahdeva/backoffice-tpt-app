@@ -73,11 +73,11 @@ class CategoryController extends GetxController {
     CategoryResponse? categoryResponse;
 
     try {
-      final productData = await dio.get(
+      final categoryData = await dio.get(
         "${BaseUrlLocal.category}?&pageSize=${pageSize.value}&page=$page",
       );
-      debugPrint('Products: ${productData.data}');
-      categoryResponse = CategoryResponse.fromJson(productData.data);
+      debugPrint('Categories: ${categoryData.data}');
+      categoryResponse = CategoryResponse.fromJson(categoryData.data);
       if(loadNext.value == true){
         dataList.addAll(categoryResponse.data!.category ?? []); 
         loadNext.value = false;
