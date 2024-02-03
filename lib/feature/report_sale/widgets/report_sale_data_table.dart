@@ -106,7 +106,19 @@ class SaleReportDataSource extends DataTableSource {
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
-                
+                PrimaryButtonWidget(
+                  width: 5.w,
+                  customColors: AppColors.red,
+                  margin: const EdgeInsets.all(0),
+                  buttonText: "Delete", 
+                  withIcon: true,
+                  icon: const Icon(
+                    IconlyLight.delete,
+                    color: AppColors.white,
+                    size: 16,
+                  ), 
+                  onPressed: () {},
+                ),
               ],
             ),
           ),
