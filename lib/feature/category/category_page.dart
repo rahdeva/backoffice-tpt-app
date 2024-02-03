@@ -50,7 +50,7 @@ class CategoryPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Daftar Kategori Produk",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,
@@ -100,7 +100,7 @@ class CategoryPage extends StatelessWidget {
                                           child: PaginatedDataTable(
                                             key: controller.tableKey,
                                             rowsPerPage: controller.pageSize.value,
-                                            availableRowsPerPage: const [10, 25, 50],
+                                            availableRowsPerPage: const [5, 10, 25],
                                             headingRowHeight: 46,
                                             onRowsPerPageChanged: (value) {
                                               controller.onRowsPerPageChanged(value!);
@@ -116,16 +116,13 @@ class CategoryPage extends StatelessWidget {
                                                 context, labelText: "No"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Tanggal"
+                                                context, labelText: "Kode Kategori"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Item"
+                                                context, labelText: "Nama Kategori"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Price"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "User"
+                                                context, labelText: "Warna Kategori"
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Aksi"

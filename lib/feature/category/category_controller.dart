@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:backoffice_tpt_app/model/category.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 
 class CategoryController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
@@ -14,16 +14,16 @@ class CategoryController extends GetxController {
   final scrollController = ScrollController();
   bool isLoading = false;
 
-  List<Sale> dataList = [];
+  List<Category> dataList = [];
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
-  Rx<int> pageSize = Rx(10);
+  Rx<int> pageSize = Rx(5);
   Rx<bool> loadNext = Rx(false);
 
   @override
   void onInit() {
-    getSalesHistory();
+    getAllCategories();
     super.onInit();
   }
 
@@ -32,7 +32,7 @@ class CategoryController extends GetxController {
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getSalesHistory();
+    getAllCategories();
   }
 
   void onPageChanged(value){
@@ -52,7 +52,7 @@ class CategoryController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getSalesHistory(page: page.value);
+    getAllCategories(page: page.value);
   }
   
   void refreshPage() async {
@@ -60,31 +60,31 @@ class CategoryController extends GetxController {
     page.value = 1;
     pageSize.value = 10;
     formKey.currentState!.reset();
-    getSalesHistory();
+    getAllCategories();
     update();
   }
 
-  void getSalesHistory({
+  void getAllCategories({
     String? searchKeyword,
     int page = 1,
   }) async {
     isLoading = true;
     final dio = await AppDio().getDIO();
-    SaleResponse? saleResponse;
+    CategoryResponse? categoryResponse;
 
     try {
       final productData = await dio.get(
-        "${BaseUrlLocal.sale}?&pageSize=${pageSize.value}&page=$page",
+        "${BaseUrlLocal.category}?&pageSize=${pageSize.value}&page=$page",
       );
       debugPrint('Products: ${productData.data}');
-      saleResponse = SaleResponse.fromJson(productData.data);
+      categoryResponse = CategoryResponse.fromJson(productData.data);
       if(loadNext.value == true){
-        dataList.addAll(saleResponse.data!.sale ?? []); 
+        dataList.addAll(categoryResponse.data!.category ?? []); 
         loadNext.value = false;
       } else{
-        dataList = saleResponse.data!.sale ?? [];
+        dataList = categoryResponse.data!.category ?? [];
       }
-      totalItems.value = saleResponse.data!.meta!.totalItems!;
+      totalItems.value = categoryResponse.data!.meta!.totalItems!;
     } on DioError catch (error) {
       debugPrint(error.toString());
     }
