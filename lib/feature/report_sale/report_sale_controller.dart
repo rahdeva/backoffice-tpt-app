@@ -23,7 +23,7 @@ class SaleReportController extends GetxController {
 
   @override
   void onInit() {
-    getSalesHistory();
+    getSalesReport();
     super.onInit();
   }
 
@@ -32,7 +32,7 @@ class SaleReportController extends GetxController {
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getSalesHistory();
+    getSalesReport();
   }
 
   void onPageChanged(value){
@@ -52,7 +52,7 @@ class SaleReportController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getSalesHistory(page: page.value);
+    getSalesReport(page: page.value);
   }
   
   void refreshPage() async {
@@ -60,11 +60,11 @@ class SaleReportController extends GetxController {
     page.value = 1;
     pageSize.value = 10;
     formKey.currentState!.reset();
-    getSalesHistory();
+    getSalesReport();
     update();
   }
 
-  void getSalesHistory({
+  void getSalesReport({
     String? searchKeyword,
     int page = 1,
   }) async {

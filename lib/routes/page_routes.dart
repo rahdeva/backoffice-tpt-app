@@ -4,7 +4,7 @@ import 'package:backoffice_tpt_app/feature/dashboard_forecasting/dashboard_forec
 import 'package:backoffice_tpt_app/feature/dashboard_transaction/dashboard_transaction_page.dart';
 import 'package:backoffice_tpt_app/feature/product/product_page.dart';
 import 'package:backoffice_tpt_app/feature/report_financial/report_financial_page.dart';
-import 'package:backoffice_tpt_app/feature/report_purchase/report_sale_page.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_page.dart';
 import 'package:backoffice_tpt_app/feature/report_sale/report_sale_page.dart';
 import 'package:backoffice_tpt_app/feature/supplier/supplier_page.dart';
 import 'package:backoffice_tpt_app/feature/user/user_page.dart';

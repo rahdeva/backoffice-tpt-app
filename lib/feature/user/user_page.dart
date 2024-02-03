@@ -50,7 +50,7 @@ class UserPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Daftar User",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,

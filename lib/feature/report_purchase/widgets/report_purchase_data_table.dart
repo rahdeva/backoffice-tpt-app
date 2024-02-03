@@ -1,8 +1,8 @@
-import 'package:backoffice_tpt_app/feature/report_purchase/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_controller.dart';
+import 'package:backoffice_tpt_app/model/purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +14,7 @@ class PurchaseReportDataSource extends DataTableSource {
     required this.context,
   });
   
-  final List<Sale> data;
+  final List<Purchase> data;
   final PurchaseReportController controller;
   final BuildContext context;
 
@@ -45,7 +45,13 @@ class PurchaseReportDataSource extends DataTableSource {
         ),
         DataCell(
           Text(
-            "${DateFormat("dd/MM/yyyy HH:mm").format(item.saleDate!)} WITA",
+            "${DateFormat("dd/MM/yyyy HH:mm").format(item.purchaseDate!)} WITA",
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.supplierName ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),

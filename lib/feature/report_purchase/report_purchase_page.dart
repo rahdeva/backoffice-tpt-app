@@ -1,5 +1,5 @@
-import 'package:backoffice_tpt_app/feature/report_purchase/report_sale_controller.dart';
-import 'package:backoffice_tpt_app/feature/report_purchase/widgets/report_sale_data_table.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/widgets/report_purchase_data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
@@ -50,7 +50,7 @@ class PurchaseReportPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Laporan Pembelian",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,
@@ -117,6 +117,9 @@ class PurchaseReportPage extends StatelessWidget {
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Tanggal"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Supplier"
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Total Item"

@@ -50,7 +50,7 @@ class SupplierPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Daftar Supplier",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,

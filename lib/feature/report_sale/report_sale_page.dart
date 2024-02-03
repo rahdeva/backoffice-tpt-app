@@ -50,7 +50,7 @@ class SaleReportPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Laporan Penjualan",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,

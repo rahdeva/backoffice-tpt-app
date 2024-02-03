@@ -50,7 +50,7 @@ class FinancialReportPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Laporan Keuangan",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,
@@ -102,6 +102,7 @@ class FinancialReportPage extends StatelessWidget {
                                             rowsPerPage: controller.pageSize.value,
                                             availableRowsPerPage: const [10, 25, 50],
                                             headingRowHeight: 46,
+                                            columnSpacing: 0,
                                             onRowsPerPageChanged: (value) {
                                               controller.onRowsPerPageChanged(value!);
                                             },
@@ -119,11 +120,20 @@ class FinancialReportPage extends StatelessWidget {
                                                 context, labelText: "Tanggal"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Item"
+                                                context, labelText: "Jenis"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Price"
+                                                context, labelText: "Keterangan"
                                               ),
+                                              dataColumnWidget(
+                                                context, labelText: "Uang Masuk"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Uang Keluar"
+                                              ),
+                                              // dataColumnWidget(
+                                              //   context, labelText: "Saldo"
+                                              // ),
                                               dataColumnWidget(
                                                 context, labelText: "User"
                                               ),

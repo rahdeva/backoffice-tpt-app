@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:backoffice_tpt_app/model/financial.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 
 class FinancialReportController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
@@ -14,7 +14,7 @@ class FinancialReportController extends GetxController {
   final scrollController = ScrollController();
   bool isLoading = false;
 
-  List<Sale> dataList = [];
+  List<Financial> dataList = [];
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
@@ -70,21 +70,21 @@ class FinancialReportController extends GetxController {
   }) async {
     isLoading = true;
     final dio = await AppDio().getDIO();
-    SaleResponse? saleResponse;
+    FinancialResponse? financialResponse;
 
     try {
-      final productData = await dio.get(
-        "${BaseUrlLocal.sale}?&pageSize=${pageSize.value}&page=$page",
+      final financialData = await dio.get(
+        "${BaseUrlLocal.financial}?&pageSize=${pageSize.value}&page=$page",
       );
-      debugPrint('Products: ${productData.data}');
-      saleResponse = SaleResponse.fromJson(productData.data);
+      debugPrint('Financials: ${financialData.data}');
+      financialResponse = FinancialResponse.fromJson(financialData.data);
       if(loadNext.value == true){
-        dataList.addAll(saleResponse.data!.sale ?? []); 
+        dataList.addAll(financialResponse.data!.financial ?? []); 
         loadNext.value = false;
       } else{
-        dataList = saleResponse.data!.sale ?? [];
+        dataList = financialResponse.data!.financial ?? [];
       }
-      totalItems.value = saleResponse.data!.meta!.totalItems!;
+      totalItems.value = financialResponse.data!.meta!.totalItems!;
     } on DioError catch (error) {
       debugPrint(error.toString());
     }
