@@ -131,9 +131,9 @@ class FinancialReportPage extends StatelessWidget {
                                               dataColumnWidget(
                                                 context, labelText: "Uang Keluar"
                                               ),
-                                              // dataColumnWidget(
-                                              //   context, labelText: "Saldo"
-                                              // ),
+                                              dataColumnWidget(
+                                                context, labelText: "Saldo"
+                                              ),
                                               dataColumnWidget(
                                                 context, labelText: "User"
                                               ),
