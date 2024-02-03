@@ -1,8 +1,8 @@
 import 'package:backoffice_tpt_app/feature/product/product_controller.dart';
+import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +14,7 @@ class ProductDataSource extends DataTableSource {
     required this.context,
   });
   
-  final List<Sale> data;
+  final List<Product> data;
   final ProductController controller;
   final BuildContext context;
 
@@ -45,13 +45,27 @@ class ProductDataSource extends DataTableSource {
         ),
         DataCell(
           Text(
-            "${DateFormat("dd/MM/yyyy HH:mm").format(item.saleDate!)} WITA",
+            item.productCode ?? "-",
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            item.totalItem.toString(),
+            item.categoryName ?? "-",
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.productName ?? "-",
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.brand == null || item.brand == ""
+            ? "-"
+            : item.brand!,
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
@@ -61,14 +75,35 @@ class ProductDataSource extends DataTableSource {
               locale: 'id', 
               decimalDigits: 0,
               symbol: "Rp "
-            ).format(item.totalPrice),
+            ).format(item.purchasePrice),
             maxLines: 1,
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
         DataCell(
           Text(
-            item.userName ?? "-",
+            NumberFormat.currency(
+              locale: 'id', 
+              decimalDigits: 0,
+              symbol: "Rp "
+            ).format(item.salePrice),
+            maxLines: 1,
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.stock == null
+            ? "-"
+            : item.stock.toString(),
+            style: Theme.of(context).textTheme.bodyMedium
+          )
+        ),
+        DataCell(
+          Text(
+            item.sold == null
+            ? "-"
+            : item.sold.toString(),
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
@@ -79,26 +114,21 @@ class ProductDataSource extends DataTableSource {
               children: [
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.blue,
+                  customColors: AppColors.orange,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "View", 
+                  buttonText: "Edit", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.pink,
+                  customColors: AppColors.red,
                   margin: const EdgeInsets.all(0),
                   buttonText: "Print", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.print,
+                  icon: const Icon(
+                    IconlyLight.delete,
                     color: AppColors.white,
                     size: 16,
                   ), 

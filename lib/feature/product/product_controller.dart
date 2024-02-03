@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
-import 'package:backoffice_tpt_app/model/sale.dart';
 
 class ProductController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
@@ -14,7 +14,7 @@ class ProductController extends GetxController {
   final scrollController = ScrollController();
   bool isLoading = false;
 
-  List<Sale> dataList = [];
+  List<Product> dataList = [];
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
@@ -23,7 +23,7 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    getSalesHistory();
+    getAllProducts();
     super.onInit();
   }
 
@@ -32,7 +32,7 @@ class ProductController extends GetxController {
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getSalesHistory();
+    getAllProducts();
   }
 
   void onPageChanged(value){
@@ -52,7 +52,7 @@ class ProductController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getSalesHistory(page: page.value);
+    getAllProducts(page: page.value);
   }
   
   void refreshPage() async {
@@ -60,31 +60,31 @@ class ProductController extends GetxController {
     page.value = 1;
     pageSize.value = 10;
     formKey.currentState!.reset();
-    getSalesHistory();
+    getAllProducts();
     update();
   }
 
-  void getSalesHistory({
+  void getAllProducts({
     String? searchKeyword,
     int page = 1,
   }) async {
     isLoading = true;
     final dio = await AppDio().getDIO();
-    SaleResponse? saleResponse;
+    ProductResponse? productResponse;
 
     try {
       final productData = await dio.get(
-        "${BaseUrlLocal.sale}?&pageSize=${pageSize.value}&page=$page",
+        "${BaseUrlLocal.product}?&pageSize=${pageSize.value}&page=$page",
       );
       debugPrint('Products: ${productData.data}');
-      saleResponse = SaleResponse.fromJson(productData.data);
+      productResponse = ProductResponse.fromJson(productData.data);
       if(loadNext.value == true){
-        dataList.addAll(saleResponse.data!.sale ?? []); 
+        dataList.addAll(productResponse.data!.product ?? []); 
         loadNext.value = false;
       } else{
-        dataList = saleResponse.data!.sale ?? [];
+        dataList = productResponse.data!.product ?? [];
       }
-      totalItems.value = saleResponse.data!.meta!.totalItems!;
+      totalItems.value = productResponse.data!.meta!.totalItems!;
     } on DioError catch (error) {
       debugPrint(error.toString());
     }

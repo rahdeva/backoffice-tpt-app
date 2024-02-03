@@ -50,7 +50,7 @@ class ProductPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "History Penjualan",
+                              "Daftar Produk",
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: AppColors.white,
@@ -99,6 +99,7 @@ class ProductPage extends StatelessWidget {
                                           ),
                                           child: PaginatedDataTable(
                                             key: controller.tableKey,
+                                            columnSpacing : 0,
                                             rowsPerPage: controller.pageSize.value,
                                             availableRowsPerPage: const [10, 25, 50],
                                             headingRowHeight: 46,
@@ -116,16 +117,28 @@ class ProductPage extends StatelessWidget {
                                                 context, labelText: "No"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Tanggal"
+                                                context, labelText: "Kode Produk"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Item"
+                                                context, labelText: "Kategori"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "Total Price"
+                                                context, labelText: "Nama Produk"
                                               ),
                                               dataColumnWidget(
-                                                context, labelText: "User"
+                                                context, labelText: "Merk"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Harga Beli"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Harga Jual"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Stok"
+                                              ),
+                                              dataColumnWidget(
+                                                context, labelText: "Terjual"
                                               ),
                                               dataColumnWidget(
                                                 context, labelText: "Aksi"
