@@ -370,6 +370,7 @@ class SideMenu extends StatelessWidget {
               },
             ),
           ),
+          const SizedBox(height: 24)
         ],
       ),
     );

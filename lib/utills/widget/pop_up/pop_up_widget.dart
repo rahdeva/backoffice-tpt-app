@@ -63,7 +63,7 @@ class PopUpWidget{
       title: "",
       contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       content: SizedBox(
-        width: 100.w,
+        width: 25.w,
         child: Column(
           children: [
             Lottie.asset(
@@ -71,7 +71,7 @@ class PopUpWidget{
                 ? AppImages.lottieSuccess 
                 : AppImages.lottieFailed,
               repeat: false,
-              width: 50.w
+              width: 15.w
             ),
             const SizedBox(height: 8),
             Text(
@@ -85,7 +85,7 @@ class PopUpWidget{
             Text(
               middleText,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: AppColors.black
               ),
             ),
@@ -117,12 +117,12 @@ class PopUpWidget{
       title: "",
       contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       content: SizedBox(
-        width: 100.w,
+        width: 30.w,
         child: Column(
           children: [
             const Icon(
-              Icons.access_time_filled_rounded,
-              color: Colors.blue,
+              Icons.info,
+              color: Colors.orange,
               size: 80,
             ),
             const SizedBox(height: 8),
@@ -133,7 +133,7 @@ class PopUpWidget{
                 color: AppColors.black
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 40),
             textAreaHintText == null && textAreaResultC == null
             ? const SizedBox()
             : TextAreaWidget(
@@ -153,23 +153,23 @@ class PopUpWidget{
               ),
             const SizedBox(height: 24),
             SizedBox(
-              width: 80.w,
+              width: 30.w,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   PrimaryButtonWidget(
                     buttonText: popUpConfirmText,
                     margin: const EdgeInsets.all(0),
-                    width: 40.w - 32,
-                    customColors: AppColors.green,
+                    width: 20.w - 84,
+                    customColors: AppColors.red,
                     onPressed: confirmOnPress
                   ),
                   const SizedBox(width: 16),
                   PrimaryButtonWidget(
                     buttonText: popUpCancelText,
                     margin: const EdgeInsets.all(0),
-                    width: 40.w - 32,
-                    customColors: AppColors.red,
+                    width: 20.w - 84,
+                    customColors: AppColors.grey,
                     onPressed: cancelOnPress ?? () => Get.back()
                   ),
                 ],

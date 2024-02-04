@@ -51,7 +51,10 @@ class ProductPage extends StatelessWidget {
                           children: [
                             ProductHeaderWidget(controller: controller),
                             const SizedBox(height: 8),
-                            const Divider(color: AppColors.white),
+                            Container(
+                              margin: const EdgeInsets.only(right: 24),
+                              child: const Divider(color: AppColors.white,)
+                            ),
                             const SizedBox(height: 8),
                             ProductTableWidget(controller: controller),
                           ],

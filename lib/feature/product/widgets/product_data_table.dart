@@ -1,11 +1,9 @@
 import 'package:backoffice_tpt_app/feature/product/product_controller.dart';
+import 'package:backoffice_tpt_app/feature/product/widgets/delete_product.dart';
+import 'package:backoffice_tpt_app/feature/product/widgets/edit_product.dart';
 import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:intl/intl.dart';
-import 'package:backoffice_tpt_app/resources/resources.dart';
-import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
-import 'package:sizer/sizer.dart';
 
 class ProductDataSource extends DataTableSource {
   ProductDataSource({
@@ -39,7 +37,8 @@ class ProductDataSource extends DataTableSource {
       cells: [
         DataCell(
           Text(
-            (index + 1).toString(),
+            // (index + 1).toString(),
+            item.productId.toString(),
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
@@ -112,28 +111,15 @@ class ProductDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.orange,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Edit", 
-                  withIcon: true,
-                  onPressed: () {},
+                EditProductButton(
+                  productId: item.productId!,
+                  controller: controller,
                 ),
                 const SizedBox(width: 12),
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.red,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Print", 
-                  withIcon: true,
-                  icon: const Icon(
-                    IconlyLight.delete,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
-                ),
+                DeleteProductButton(
+                  productId: item.productId!,
+                  controller: controller
+                )
               ],
             ),
           ),
