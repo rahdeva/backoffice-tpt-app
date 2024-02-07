@@ -164,7 +164,7 @@ class CategoryController extends GetxController {
       final categoryData = await dio.get(
         BaseUrlLocal.categoryByID(categoryId: categoryId)
       );
-      debugPrint('Product Detail : ${categoryData.data}');
+      debugPrint('Category Detail : ${categoryData.data}');
       categoryDetailResponse = CategoryDetailResponse.fromJson(categoryData.data);
       dataObject = categoryDetailResponse.data!.category!;
       isEdit == true

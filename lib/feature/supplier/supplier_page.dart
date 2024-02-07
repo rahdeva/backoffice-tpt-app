@@ -1,10 +1,10 @@
 import 'package:backoffice_tpt_app/feature/supplier/supplier_controller.dart';
-import 'package:backoffice_tpt_app/feature/supplier/widgets/supplier_data_table.dart';
+import 'package:backoffice_tpt_app/feature/supplier/widgets/supplier_header_widget.dart';
+import 'package:backoffice_tpt_app/feature/supplier/widgets/supplier_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/responsive.dart';
-import 'package:backoffice_tpt_app/utills/widget/table/data_column_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class SupplierPage extends StatelessWidget {
@@ -49,96 +49,14 @@ class SupplierPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Daftar Supplier",
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700
-                              ),
+                            SupplierHeaderWidget(controller: controller),
+                            const SizedBox(height: 8),
+                            Container(
+                              margin: const EdgeInsets.only(right: 24),
+                              child: const Divider(color: AppColors.white,)
                             ),
-                            const SizedBox(height: 24),
-                            // SizedBox(
-                            //   width: 20.w,
-                            //   child: TextFieldWidget(
-                            //     name: "Search", 
-                            //     hintText: "Search",
-                            //     filled: true,
-                            //     keyboardType: TextInputType.text,
-                            //     contentPadding: const EdgeInsets.symmetric(
-                            //       horizontal: 12, 
-                            //       vertical: 12
-                            //     ),
-                            //     prefixIcon: const Icon(
-                            //       Icons.search,
-                            //     ),
-                            //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            //       color: AppColors.colorPrimary
-                            //     ),
-                            //   ),
-                            // ),
-                            // const SizedBox(height: 24),
-                            Expanded(
-                              // height: 70.h,
-                              child: (controller.isLoading)
-                                ? const Center(child: CircularProgressIndicator())
-                                : Scrollbar(
-                                    thumbVisibility: true,
-                                    child: SingleChildScrollView(
-                                      controller: controller.scrollController,
-                                      child: Container(
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                                        padding: const EdgeInsets.only(right: 24),
-                                        width: double.infinity,
-                                        child: Theme(
-                                          data: ThemeData(
-                                            cardTheme: Theme.of(context).cardTheme,
-                                            textTheme: TextTheme(
-                                              bodySmall: Theme.of(context).textTheme.titleSmall
-                                            )
-                                          ),
-                                          child: PaginatedDataTable(
-                                            key: controller.tableKey,
-                                            rowsPerPage: controller.pageSize.value,
-                                            availableRowsPerPage: const [10, 25, 50],
-                                            headingRowHeight: 46,
-                                            onRowsPerPageChanged: (value) {
-                                              controller.onRowsPerPageChanged(value!);
-                                            },
-                                            onPageChanged: (value) {
-                                              controller.onPageChanged(value);
-                                            },
-                                            headingRowColor: MaterialStateProperty.resolveWith(
-                                              (states) => AppColors.primary
-                                            ),
-                                            columns: [
-                                              dataColumnWidget(
-                                                context, labelText: "No"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Nama Supplier"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "No Telepon"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Alamat"
-                                              ),
-                                              dataColumnWidget(
-                                                context, labelText: "Aksi"
-                                              ),
-                                            ],
-                                            source: SupplierDataSource(
-                                              data: controller.dataList,
-                                              controller: controller,
-                                              context: context
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ),
-                            ),
+                            const SizedBox(height: 8),
+                            SupplierTableWidget(controller: controller),
                           ],
                         ),
                       ),

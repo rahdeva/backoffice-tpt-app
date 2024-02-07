@@ -1,10 +1,8 @@
 import 'package:backoffice_tpt_app/feature/supplier/supplier_controller.dart';
+import 'package:backoffice_tpt_app/feature/supplier/widgets/delete_supplier.dart';
+import 'package:backoffice_tpt_app/feature/supplier/widgets/edit_supplier.dart';
 import 'package:backoffice_tpt_app/model/supplier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:backoffice_tpt_app/resources/resources.dart';
-import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
-import 'package:sizer/sizer.dart';
 
 class SupplierDataSource extends DataTableSource {
   SupplierDataSource({
@@ -65,28 +63,15 @@ class SupplierDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.orange,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Edit", 
-                  withIcon: true,
-                  onPressed: () {},
+                EditSupplierButton(
+                  supplierId: item.supplierId!,
+                  controller: controller,
                 ),
                 const SizedBox(width: 12),
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.red,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Delete", 
-                  withIcon: true,
-                  icon: const Icon(
-                    IconlyLight.delete,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
-                ),
+                DeleteSupplierButton(
+                  supplierId: item.supplierId!,
+                  controller: controller
+                )
               ],
             ),
           ),
