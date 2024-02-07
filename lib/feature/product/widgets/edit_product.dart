@@ -4,6 +4,7 @@ import 'package:backoffice_tpt_app/utills/helper/currency_text_input_formatter.d
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/image_picker_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:flutter/material.dart';
@@ -49,15 +50,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Kode Produk",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Kode Produk"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -80,15 +74,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Nama Produk",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Nama Produk"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -111,15 +98,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Kategori",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Kategori"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -142,15 +122,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Merk",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Merk"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -173,15 +146,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Harga Beli",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Harga Beli"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -211,15 +177,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Harga Jual",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Harga Jual"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -249,15 +208,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Stok",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Stok"
                     ),
                     SizedBox(
                       width: 50.w - 16,
@@ -280,15 +232,8 @@ class EditProductButton extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 16),
-                    SizedBox(
-                      width: 10.w - 16,
-                      child: Text(
-                        "Gambar",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    const LabelFormWidget2(
+                      label: "Gambar"
                     ),
                     ImagePickerWidget(
                       image: controller.newImage,

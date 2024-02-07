@@ -1,10 +1,8 @@
 import 'package:backoffice_tpt_app/feature/category/category_controller.dart';
+import 'package:backoffice_tpt_app/feature/category/widgets/delete_category.dart';
+import 'package:backoffice_tpt_app/feature/category/widgets/edit_category.dart';
 import 'package:backoffice_tpt_app/model/category.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:backoffice_tpt_app/resources/resources.dart';
-import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
-import 'package:sizer/sizer.dart';
 
 class CategoryDataSource extends DataTableSource {
   CategoryDataSource({
@@ -65,28 +63,15 @@ class CategoryDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.orange,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Edit", 
-                  withIcon: true,
-                  onPressed: () {},
+                EditCategoryButton(
+                  categoryId: item.categoryId!,
+                  controller: controller,
                 ),
                 const SizedBox(width: 12),
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.red,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Delete", 
-                  withIcon: true,
-                  icon: const Icon(
-                    IconlyLight.delete,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
-                ),
+                DeleteCategoryButton(
+                  categoryId: item.categoryId!,
+                  controller: controller
+                )
               ],
             ),
           ),

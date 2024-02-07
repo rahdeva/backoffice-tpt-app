@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
+import 'package:sizer/sizer.dart';
 
 class LabelFormWidget extends StatelessWidget {
   const LabelFormWidget({
@@ -24,6 +25,29 @@ class LabelFormWidget extends StatelessWidget {
           fontSize: fontSize ?? 12,
           color: AppColors.black,
           fontWeight: fontWeight ?? FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+class LabelFormWidget2 extends StatelessWidget {
+  const LabelFormWidget2({
+    super.key,
+    required this.label
+  });
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 10.w - 16,
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+          color: AppColors.black,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

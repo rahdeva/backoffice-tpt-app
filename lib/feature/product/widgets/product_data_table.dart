@@ -37,8 +37,7 @@ class ProductDataSource extends DataTableSource {
       cells: [
         DataCell(
           Text(
-            // (index + 1).toString(),
-            item.productId.toString(),
+            (index + 1).toString(),
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
