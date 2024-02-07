@@ -1,10 +1,8 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
-import 'package:backoffice_tpt_app/model/all_user.dart';
+import 'package:backoffice_tpt_app/feature/user/widgets/delete_user.dart';
+import 'package:backoffice_tpt_app/feature/user/widgets/edit_user.dart';
+import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:backoffice_tpt_app/resources/resources.dart';
-import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
-import 'package:sizer/sizer.dart';
 
 class UserDataSource extends DataTableSource {
   UserDataSource({
@@ -13,7 +11,7 @@ class UserDataSource extends DataTableSource {
     required this.context,
   });
   
-  final List<AllUser> data;
+  final List<UserData> data;
   final UserController controller;
   final BuildContext context;
 
@@ -77,28 +75,15 @@ class UserDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.orange,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Edit", 
-                  withIcon: true,
-                  onPressed: () {},
+                EditUserButton(
+                  userId: item.userId!,
+                  controller: controller,
                 ),
                 const SizedBox(width: 12),
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.red,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Delete", 
-                  withIcon: true,
-                  icon: const Icon(
-                    IconlyLight.delete,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
-                ),
+                DeleteUserButton(
+                  userId: item.userId!,
+                  controller: controller
+                )
               ],
             ),
           ),

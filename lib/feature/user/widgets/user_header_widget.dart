@@ -1,5 +1,5 @@
-import 'package:backoffice_tpt_app/feature/supplier/supplier_controller.dart';
-import 'package:backoffice_tpt_app/feature/supplier/widgets/add_supplier.dart';
+import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
+import 'package:backoffice_tpt_app/feature/user/widgets/add_user.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/icon_button.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
@@ -9,20 +9,20 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-class SupplierHeaderWidget extends StatelessWidget {
-  const SupplierHeaderWidget({
+class UserHeaderWidget extends StatelessWidget {
+  const UserHeaderWidget({
     super.key,
     required this.controller
   });
 
-  final SupplierController controller;
+  final UserController controller;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          "Daftar Supplier",
+          "Daftar User",
           textAlign: TextAlign.left,
           style: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.white,
@@ -82,7 +82,7 @@ class SupplierHeaderWidget extends StatelessWidget {
                 ),
                 onPressed: (){
                   controller.searchKeyword.value = controller.searchformKey.currentState!.fields['search']!.value;
-                  controller.getAllSuppliers(
+                  controller.getAllUsers(
                     keyword: controller.searchKeyword.value
                   );
                 }, 
@@ -97,7 +97,7 @@ class SupplierHeaderWidget extends StatelessWidget {
           height: 32,
         ),
         const SizedBox(width: 16),
-        AddSupplierButton(
+        AddUserButton(
           controller: controller
         ),
         const SizedBox(width: 24),
