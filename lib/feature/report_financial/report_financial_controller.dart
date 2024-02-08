@@ -1,30 +1,57 @@
 import 'dart:async';
 
+import 'package:backoffice_tpt_app/feature/auth/auth_controller.dart';
 import 'package:backoffice_tpt_app/model/financial.dart';
+import 'package:backoffice_tpt_app/model/financial_detail.dart';
+import 'package:backoffice_tpt_app/model/user.dart';
+import 'package:backoffice_tpt_app/resources/resources.dart';
+import 'package:backoffice_tpt_app/utills/helper/loading_helper.dart';
+import 'package:backoffice_tpt_app/utills/helper/string_formatter.dart';
+import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/snackbar/snackbar_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
+import 'package:intl/intl.dart';
 
 class FinancialReportController extends GetxController {
-  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> searchformKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> addFinancialReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> editFinancialReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> deleteFinancialReportFormKey = GlobalKey<FormBuilderState>();
+  final AuthController authController = AuthController.find;
+  UserData? get user => authController.user;
   final tableKey = GlobalKey<PaginatedDataTableState>();
   final scrollController = ScrollController();
   bool isLoading = false;
 
   List<Financial> dataList = [];
+  late Financial dataObject;
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
   Rx<int> pageSize = Rx(10);
   Rx<bool> loadNext = Rx(false);
+  Rx<String> searchKeyword = Rx("");
 
   @override
   void onInit() {
-    getSalesHistory();
+    getFinancialReports();
     super.onInit();
+  }
+
+  Future<void> refreshPage() async {
+    dataList.clear();
+    page.value = 1;
+    pageSize.value = 10;
+    searchformKey.currentState?.reset();
+    searchKeyword.value = "";
+    tableKey.currentState?.pageTo(1);
+    await getFinancialReports();
+    update();
   }
 
   void onRowsPerPageChanged(value){
@@ -32,7 +59,7 @@ class FinancialReportController extends GetxController {
     page.value = 1;
     dataList.clear();
     tableKey.currentState?.pageTo(1);
-    getSalesHistory();
+    getFinancialReports();
   }
 
   void onPageChanged(value){
@@ -52,20 +79,12 @@ class FinancialReportController extends GetxController {
         duration: const Duration(milliseconds: 300)
       ),
     );  
-    getSalesHistory(page: page.value);
-  }
-  
-  void refreshPage() async {
-    dataList.clear();
-    page.value = 1;
-    pageSize.value = 10;
-    formKey.currentState!.reset();
-    getSalesHistory();
-    update();
+    getFinancialReports(page: page.value);
   }
 
-  void getSalesHistory({
-    String? searchKeyword,
+  // [READ] Get All Products
+  Future<void> getFinancialReports({
+    String? keyword,
     int page = 1,
   }) async {
     isLoading = true;
@@ -74,7 +93,7 @@ class FinancialReportController extends GetxController {
 
     try {
       final financialData = await dio.get(
-        "${BaseUrlLocal.financial}?&pageSize=${pageSize.value}&page=$page",
+        "${BaseUrlLocal.financial}?keyword=${keyword ?? ""}&pageSize=${pageSize.value}&page=$page",
       );
       debugPrint('Financials: ${financialData.data}');
       financialResponse = FinancialResponse.fromJson(financialData.data);
@@ -90,5 +109,211 @@ class FinancialReportController extends GetxController {
     }
     isLoading = false;
     update();
+  }
+
+  // [CREATE] Add New Financial Report
+  void addNewFinancialReport({
+    required String type, 
+    required String financialDate, 
+    required String information,
+    required String cashIn, 
+    required String cashOut, 
+    required String balance, 
+    required BuildContext context,
+  }) async {
+    showLoading();
+    final dio = await AppDio().getBasicDIO();
+
+    try {
+      final financialData = await dio.post(
+        BaseUrlLocal.financial,
+        data: {
+          "user_id" : user?.userId,
+          "type" : int.parse(type),
+          "information" : information,
+          "financial_date": "2024-01-27T10:27:24.6881773Z",
+          "cash_in" : StringFormatter.formatCurrencyNumber(cashIn),
+          "cash_out" : StringFormatter.formatCurrencyNumber(cashOut),
+          "balance" : StringFormatter.formatCurrencyNumber(balance),
+        },
+      );
+      debugPrint('Tambah Laporan: ${financialData.data}');
+      dismissLoading();
+      Get.back();
+      getFinancialReports();
+      // ignore: use_build_context_synchronously
+      PopUpWidget.successAndFailPopUp(
+        context: context, 
+        titleString: "Success!", 
+        middleText: "Laporan berhasil ditambahkan.", 
+        buttonText: "OK"
+      );
+    } on DioError catch (error) {
+      dismissLoading();
+      SnackbarWidget.defaultSnackbar(
+        icon: const Icon(
+          Icons.cancel,
+          color: AppColors.red,
+        ),
+        title: "Error!",
+        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+      );
+      debugPrint(error.toString());
+    }
+  }
+
+  // [READ] Get Financial Report Detail
+  Future<void> getFinancialReportDetail({
+    int? financialId,
+    bool? isEdit
+  }) async {
+    final dio = await AppDio().getDIO();
+    FinancialReportDetailResponse? financialDetailResponse;
+
+    try {
+      final financialDetailData = await dio.get(
+        BaseUrlLocal.financialByID(financialID: financialId)
+      );
+      debugPrint('Financial Detail : ${financialDetailData.data}');
+      financialDetailResponse = FinancialReportDetailResponse.fromJson(financialDetailData.data);
+      dataObject = financialDetailResponse.data!.financial!;
+      isEdit == true
+      ? editFinancialReportFormKey.currentState!.patchValue({
+          "user_id" : dataObject.userId.toString(),
+          "type" : dataObject.type.toString(),
+          "information" : dataObject.information,
+          "financial_date": dataObject.financialDate.toString(),
+          "cash_in" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashIn),
+          "cash_out" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashOut),
+          "balance" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.balance),
+        })
+      : deleteFinancialReportFormKey.currentState!.patchValue({
+          "user_id" : dataObject.userId.toString(),
+          "type" : dataObject.type.toString(),
+          "information" : dataObject.information,
+          "financial_date": dataObject.financialDate.toString(),
+          "cash_in" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashIn),
+          "cash_out" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashOut),
+          "balance" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.balance),
+        });
+      update();
+    } on DioError catch (error) {
+      debugPrint(error.toString());
+    }
+    update();
+  }
+
+  // [UPDATE] Update FinancialReport
+  void updateFinancialReport({
+    required int financialId, 
+    required String type, 
+    required String financialDate, 
+    required String information,
+    required String cashIn, 
+    required String cashOut, 
+    required String balance,
+    required BuildContext context,
+  }) async {
+    showLoading();
+    final dio = await AppDio().getDIO();
+
+    try {
+      final financialData = await dio.put(
+        BaseUrlLocal.financial,
+        data: {
+          "financial_id": financialId,
+          "user_id" : user?.userId,
+          "type" : int.parse(type),
+          "information" : information,
+          "financial_date": "2024-01-27T10:27:24.6881773Z",
+          "cash_in" : StringFormatter.formatCurrencyNumber(cashIn),
+          "cash_out" : StringFormatter.formatCurrencyNumber(cashOut),
+          "balance" : StringFormatter.formatCurrencyNumber(balance),
+        },
+      );
+      debugPrint('Edit Financial: ${financialData.data}');
+      dismissLoading();
+      Get.back();
+      // ignore: use_build_context_synchronously
+      PopUpWidget.successAndFailPopUp(
+        context: context, 
+        titleString: "Success!", 
+        middleText: "Laporan berhasil diperbaharui.", 
+        buttonText: "OK"
+      );
+      await refreshPage();
+    } on DioError catch (error) {
+      dismissLoading();
+      SnackbarWidget.defaultSnackbar(
+        icon: const Icon(
+          Icons.cancel,
+          color: AppColors.red,
+        ),
+        title: "Error!",
+        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+      );
+      debugPrint(error.toString());
+    }
+  }
+
+  // [DELETE] Delete Financial Report
+  void deleteFinancialReport({
+    required int financialId, 
+    required BuildContext context,
+  }) async {
+    showLoading();
+    final dio = await AppDio().getDIO();
+
+    try {
+      final financialData = await dio.delete(
+        BaseUrlLocal.deleteFinancial(financialID: financialId)
+      );
+      debugPrint('Delete Financial: ${financialData.data}');
+      dismissLoading();
+      Get.back();
+      // ignore: use_build_context_synchronously
+      PopUpWidget.successAndFailPopUp(
+        context: context, 
+        titleString: "Success!", 
+        middleText: "Laporan berhasil dihapus.", 
+        buttonText: "OK"
+      );
+      await refreshPage();
+    } on DioError catch (error) {
+      dismissLoading();
+      SnackbarWidget.defaultSnackbar(
+        icon: const Icon(
+          Icons.cancel,
+          color: AppColors.red,
+        ),
+        title: "Error!",
+        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+      );
+      debugPrint(error.toString());
+    }
   }
 }
