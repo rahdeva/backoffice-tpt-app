@@ -141,8 +141,11 @@ class DeleteUserButton extends StatelessWidget {
                         enabled: false,
                         name: 'phone_number',
                         hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        validator: Validator.list([
+                            Validator.numeric(),
+                            Validator.required()
+                          ]),  
+                        keyboardType: TextInputType.number,
                         borderRadius: 10,
                         contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(

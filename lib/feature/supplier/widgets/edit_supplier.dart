@@ -3,6 +3,7 @@ import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/text_area_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class EditSupplierButton extends StatelessWidget {
           supplierId : supplierId,
           isEdit: true 
         );
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Edit Supplier", 
@@ -45,6 +46,7 @@ class EditSupplierButton extends StatelessWidget {
               children : [  
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -52,13 +54,13 @@ class EditSupplierButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'supplier_name',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -69,6 +71,7 @@ class EditSupplierButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -76,13 +79,16 @@ class EditSupplierButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'phone_number',
                         hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        validator: Validator.list([
+                            Validator.numeric(),
+                            Validator.required()
+                          ]),  
+                        keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -93,6 +99,7 @@ class EditSupplierButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -100,13 +107,22 @@ class EditSupplierButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
-                        name: 'address',
-                        hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                      child: TextAreaWidget(
+                        name: "address", 
+                        hintText: "", 
+                        textAreaResultC: controller.editAddressResult, 
+                        maxLength: 200,
                         borderRadius: 10,
+                        validator: Validator.list([
+                          Validator.required(),
+                          Validator.maxLength(200),
+                        ]),
+                        onChanged: (newVal) {
+                          if (newVal != "") {
+                            controller.editAddressResult.value = newVal!;
+                          }
+                        }, 
+                        keyboardType: TextInputType.text,
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400

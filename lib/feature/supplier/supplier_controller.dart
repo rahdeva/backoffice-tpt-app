@@ -31,6 +31,10 @@ class SupplierController extends GetxController {
   Rx<bool> loadNext = Rx(false);
   Rx<String> searchKeyword = Rx("");
 
+  RxString addAddressResult = "".obs;
+  RxString editAddressResult = "".obs;
+  RxString deleteAddressResult = "".obs;
+
   @override
   void onInit() {
     getAllSuppliers();
