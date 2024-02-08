@@ -67,7 +67,7 @@ class TextFieldWidget extends StatelessWidget {
           ? filled
             ? AppColors.white
             : Colors.transparent
-          : AppColors.gray300,
+          : AppColors.gray500,
         labelText: label,
         hintText: hintText,
         prefixIcon: prefixIcon,

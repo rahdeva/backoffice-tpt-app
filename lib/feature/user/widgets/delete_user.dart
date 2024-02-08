@@ -38,7 +38,7 @@ class DeleteUserButton extends StatelessWidget {
           userId : userId,
           isEdit: false
         );
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Delete User", 

@@ -36,7 +36,7 @@ class EditUserButton extends StatelessWidget {
           userId : userId,
           isEdit: true 
         );
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Edit User", 

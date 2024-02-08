@@ -31,7 +31,7 @@ class AddCategoryButton extends StatelessWidget {
         size: 16,
       ), 
       onPressed: () {
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Tambah Kategori", 
@@ -44,6 +44,7 @@ class AddCategoryButton extends StatelessWidget {
               children : [  
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -51,13 +52,13 @@ class AddCategoryButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'category_code',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -68,6 +69,7 @@ class AddCategoryButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -75,13 +77,13 @@ class AddCategoryButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'category_name',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -92,6 +94,7 @@ class AddCategoryButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -99,13 +102,13 @@ class AddCategoryButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'category_color',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400

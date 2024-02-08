@@ -65,7 +65,7 @@ class TextAreaWidget extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: enabled 
                 ? Colors.transparent
-                : AppColors.gray300,
+                : AppColors.gray500,
               labelText: label,
               hintText: hintText,
               suffixIcon: suffixIcon,
