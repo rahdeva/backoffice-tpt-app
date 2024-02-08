@@ -34,10 +34,12 @@ class LabelFormWidget extends StatelessWidget {
 class LabelFormWidget2 extends StatelessWidget {
   const LabelFormWidget2({
     super.key,
-    required this.label
+    required this.label,
+    this.labelColor
   });
 
   final String label;
+  final Color? labelColor;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class LabelFormWidget2 extends StatelessWidget {
       child: Text(
         label,
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-          color: AppColors.black,
+          color: labelColor ?? AppColors.black,
           fontWeight: FontWeight.w500,
         ),
       ),

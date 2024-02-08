@@ -3,6 +3,7 @@ import 'package:backoffice_tpt_app/feature/supplier/widgets/delete_supplier.dart
 import 'package:backoffice_tpt_app/feature/supplier/widgets/edit_supplier.dart';
 import 'package:backoffice_tpt_app/model/supplier.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SupplierDataSource extends DataTableSource {
   SupplierDataSource({
@@ -37,25 +38,35 @@ class SupplierDataSource extends DataTableSource {
         DataCell(
           Text(
             (index + 1).toString(),
-            style: Theme.of(context).textTheme.bodyMedium
+            style: Theme.of(context).textTheme.bodyMedium,
+            overflow: TextOverflow.ellipsis,
           )
         ),
         DataCell(
           Text(
             item.supplierName ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+            style: Theme.of(context).textTheme.bodyMedium,
+            overflow: TextOverflow.ellipsis,
           )
         ),
         DataCell(
           Text(
             item.phoneNumber ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+            style: Theme.of(context).textTheme.bodyMedium,
+            overflow: TextOverflow.ellipsis,
           )
         ),
         DataCell(
-          Text(
-            item.address ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 30.w,
+            ),
+            child: Text(
+              item.address ?? "-",
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           )
         ),
         DataCell(

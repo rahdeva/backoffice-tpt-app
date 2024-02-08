@@ -44,8 +44,10 @@ class SupplierTableWidget extends StatelessWidget {
                     key: controller.tableKey,
                     columnSpacing : 0,
                     rowsPerPage: controller.pageSize.value,
-                    availableRowsPerPage: const [5, 10, 25],
-                    headingRowHeight: 46,
+                    availableRowsPerPage: const [10, 15, 25],
+                    headingRowHeight: 56,
+                    dataRowMinHeight: 36,
+                    dataRowMaxHeight: 46,
                     onRowsPerPageChanged: (value) {
                       controller.onRowsPerPageChanged(value!);
                     },

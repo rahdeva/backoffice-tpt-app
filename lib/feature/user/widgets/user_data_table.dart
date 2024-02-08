@@ -3,6 +3,7 @@ import 'package:backoffice_tpt_app/feature/user/widgets/delete_user.dart';
 import 'package:backoffice_tpt_app/feature/user/widgets/edit_user.dart';
 import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class UserDataSource extends DataTableSource {
   UserDataSource({
@@ -37,19 +38,33 @@ class UserDataSource extends DataTableSource {
         DataCell(
           Text(
             (index + 1).toString(),
-            style: Theme.of(context).textTheme.bodyMedium
+            style: Theme.of(context).textTheme.bodyMedium,
           )
         ),
         DataCell(
-          Text(
-            item.roleName ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 10.w,
+            ),
+            child: Text(
+              item.roleName ?? "-",
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           )
         ),
         DataCell(
-          Text(
-            item.name ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 10.w,
+            ),
+            child: Text(
+              item.name ?? "-",
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           )
         ),
         DataCell(
@@ -65,9 +80,16 @@ class UserDataSource extends DataTableSource {
           )
         ),
         DataCell(
-          Text(
-            item.address ?? "-",
-            style: Theme.of(context).textTheme.bodyMedium
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 12.w,
+            ),
+            child: Text(
+              item.address ?? "-",
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           )
         ),
         DataCell(

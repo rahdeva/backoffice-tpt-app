@@ -1,5 +1,9 @@
+import 'package:backoffice_tpt_app/utills/helper/validator.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:backoffice_tpt_app/feature/setting/setting_controller.dart';
@@ -244,7 +248,7 @@ class SettingPage extends StatelessWidget {
                                                               fontWeight: FontWeight.w600
                                                             ),
                                                             onPressed: () async {
-                                                              controller.sendPasswordResetEmail();
+                                                              controller.sendPasswordResetEmail(context);
                                                             },
                                                           ),
                                                         ),
@@ -257,42 +261,160 @@ class SettingPage extends StatelessWidget {
                                             const SizedBox(width: 24),
                                             Expanded(
                                               flex: 2,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  border: Border.all(color: AppColors.white)
-                                                ),
-                                                padding: const EdgeInsets.all(24),
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      "Edit Profile",
-                                                      textAlign: TextAlign.left,
-                                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                                        color: AppColors.white,
-                                                        fontWeight: FontWeight.w700
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 24),
-                                                    Align(
-                                                      alignment: Alignment.bottomRight,
-                                                      child: PrimaryButtonWidget(
-                                                        width: 12.w,
-                                                        customColors: AppColors.primary,
-                                                        margin: const EdgeInsets.all(0),
-                                                        buttonText: "Edit Profile", 
-                                                        withIcon: true,
-                                                          padding: 12,
-                                                          textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                                            color: AppColors.white,
-                                                            fontWeight: FontWeight.w600
+                                              child: FormBuilder(
+                                                key: controller.editUserFormKey,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    border: Border.all(color: AppColors.white)
+                                                  ),
+                                                  padding: const EdgeInsets.all(24),
+                                                  child: Column(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Text(
+                                                            "Edit Profile",
+                                                            textAlign: TextAlign.left,
+                                                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                                              color: AppColors.white,
+                                                              fontWeight: FontWeight.w700
+                                                            ),
                                                           ),
-                                                        onPressed: () async {
-                                                      
-                                                        },
+                                                          const SizedBox(height: 24),
+                                                          Row(
+                                                            children: [
+                                                              const LabelFormWidget2(
+                                                                labelColor: AppColors.white,
+                                                                label: "Nama User"
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30.w - 34,
+                                                                height: 32,
+                                                                child: TextFieldWidget(
+                                                                  filled: true,
+                                                                  name: 'name',
+                                                                  hintText: "",
+                                                                  validator: Validator.required(),
+                                                                  keyboardType: TextInputType.text,
+                                                                  borderRadius: 10,
+                                                                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                                    color: AppColors.black,
+                                                                    fontWeight: FontWeight.w400
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(height: 24),
+                                                          Row(
+                                                            children: [
+                                                              const LabelFormWidget2(
+                                                                labelColor: AppColors.white,
+                                                                label: "Email"
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30.w - 34,
+                                                                height: 32,
+                                                                child: TextFieldWidget(
+                                                                  filled: true,
+                                                                  name: 'email',
+                                                                  hintText: "",
+                                                                  validator: Validator.required(),
+                                                                  keyboardType: TextInputType.text,
+                                                                  borderRadius: 10,
+                                                                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                                    color: AppColors.black,
+                                                                    fontWeight: FontWeight.w400
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(height: 24),
+                                                          Row(
+                                                            children: [
+                                                              const LabelFormWidget2(
+                                                                labelColor: AppColors.white,
+                                                                label: "No Telepon"
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30.w - 34,
+                                                                height: 32,
+                                                                child: TextFieldWidget(
+                                                                  filled: true,
+                                                                  name: 'phone_number',
+                                                                  hintText: "",
+                                                                  validator: Validator.required(),
+                                                                  keyboardType: TextInputType.text,
+                                                                  borderRadius: 10,
+                                                                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                                    color: AppColors.black,
+                                                                    fontWeight: FontWeight.w400
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(height: 24),
+                                                          Row(
+                                                            children: [
+                                                              const LabelFormWidget2(
+                                                                labelColor: AppColors.white,
+                                                                label: "Alamat"
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30.w - 34,
+                                                                height: 32,
+                                                                child: TextFieldWidget(
+                                                                  filled: true,
+                                                                  name: 'address',
+                                                                  hintText: "",
+                                                                  validator: Validator.required(),
+                                                                  keyboardType: TextInputType.text,
+                                                                  borderRadius: 10,
+                                                                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                                    color: AppColors.black,
+                                                                    fontWeight: FontWeight.w400
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(height: 24),
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Align(
+                                                        alignment: Alignment.bottomRight,
+                                                        child: PrimaryButtonWidget(
+                                                          width: 12.w,
+                                                          customColors: AppColors.primary,
+                                                          margin: const EdgeInsets.all(0),
+                                                          buttonText: "Edit Profile", 
+                                                          withIcon: true,
+                                                            padding: 12,
+                                                            textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                              color: AppColors.white,
+                                                              fontWeight: FontWeight.w600
+                                                            ),
+                                                          onPressed: () async {
+                                                            if(
+                                                              controller.editUserFormKey.currentState != null &&
+                                                              controller.editUserFormKey.currentState!.saveAndValidate()
+                                                            ){
+                                                              controller.editProfile(
+                                                                name: controller.editUserFormKey.currentState!.fields['name']!.value, 
+                                                                email: controller.editUserFormKey.currentState!.fields['email']!.value, 
+                                                                phoneNumber: controller.editUserFormKey.currentState!.fields['phone_number']!.value, 
+                                                                address: controller.editUserFormKey.currentState!.fields['address']!.value, 
+                                                                context: context
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
