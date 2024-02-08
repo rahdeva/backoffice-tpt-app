@@ -186,7 +186,7 @@ class LoginController extends BaseController<User> {
             color: AppColors.red,
           ),
           title: "Oops!", 
-          subtitle: e.code
+          subtitle: e.message.toString()
         );
       }
     }

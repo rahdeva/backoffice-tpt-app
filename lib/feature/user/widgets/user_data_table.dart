@@ -1,5 +1,5 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
-import 'package:backoffice_tpt_app/feature/user/widgets/delete_user.dart';
+// import 'package:backoffice_tpt_app/feature/user/widgets/delete_user.dart';
 import 'package:backoffice_tpt_app/feature/user/widgets/edit_user.dart';
 import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:flutter/material.dart';
@@ -101,11 +101,11 @@ class UserDataSource extends DataTableSource {
                   userId: item.userId!,
                   controller: controller,
                 ),
-                const SizedBox(width: 12),
-                DeleteUserButton(
-                  userId: item.userId!,
-                  controller: controller
-                )
+                // const SizedBox(width: 12),
+                // DeleteUserButton(
+                //   userId: item.userId!,
+                //   controller: controller
+                // )
               ],
             ),
           ),

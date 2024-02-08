@@ -42,8 +42,69 @@ class PopUpWidget{
                 content ?? const SizedBox(),
               ],
             )
-          : content ?? const SizedBox(),
+          : content ?? const SizedBox()
       ),
+    );
+  
+  }
+  // Default Pop Up
+  static Future<void> inputPopUp({
+    required BuildContext context,
+    required String titleString, 
+    bool withMiddleText = true, 
+    String? middleText, 
+    double? width, 
+    Widget? content, 
+  }) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titlePadding: const EdgeInsets.only(top: 40),
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+          backgroundColor: AppColors.white,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8))
+          ),
+          title: Text(
+            titleString, 
+            textAlign: TextAlign.center, 
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+              color: AppColors.black,
+              fontWeight: FontWeight.w700
+            ),
+          ),
+          content: Theme(
+            data: ThemeData(
+              scrollbarTheme: const ScrollbarThemeData().copyWith(
+                thumbColor: MaterialStateProperty.all(AppColors.background1),
+              ),
+              textTheme: TextTheme(
+                displayLarge: Theme.of(context).textTheme.displayLarge,
+                displayMedium: Theme.of(context).textTheme.displayMedium,
+                displaySmall: Theme.of(context).textTheme.displaySmall,
+                headlineLarge: Theme.of(context).textTheme.headlineLarge,
+                headlineMedium: Theme.of(context).textTheme.headlineMedium,
+                headlineSmall: Theme.of(context).textTheme.headlineSmall,
+                bodyLarge: Theme.of(context).textTheme.bodyLarge,
+                bodyMedium: Theme.of(context).textTheme.bodyMedium,
+                bodySmall: Theme.of(context).textTheme.bodySmall,
+              )
+            ),
+            child: Scrollbar(
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.only(right: 24),
+                  child: content
+                )
+              ),
+            ),
+          ),
+          buttonPadding: EdgeInsets.zero,
+        );
+      }
     );
   }
 

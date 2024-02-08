@@ -1,8 +1,11 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
+import 'package:backoffice_tpt_app/model/role.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/dropdown_search_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/text_area_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,7 @@ class EditUserButton extends StatelessWidget {
       buttonText: "Edit", 
       withIcon: true,
       onPressed: () {
+        controller.getRoles();
         controller.getUserDetail(
           userId : userId,
           isEdit: true 
@@ -45,6 +49,7 @@ class EditUserButton extends StatelessWidget {
               children : [  
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -52,13 +57,13 @@ class EditUserButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'name',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -69,6 +74,7 @@ class EditUserButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -76,13 +82,27 @@ class EditUserButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
-                        name: 'role_id',
+                      child: DropdownSearchWidget<Role>(
                         hintText: "",
                         validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        asyncItems: (filter) => controller.getRoles(),
+                        onChanged: (Role? newValue){
+                          controller.roleResult = newValue;
+                        },
                         borderRadius: 10,
+                        selectedItem: controller.roleResult,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
+                        itemAsString: (Role role) => role.roleName ?? "-",
+                        itemBuilder: (context, item, isSelected) {
+                          return ListTile(
+                            title: Text(
+                              item.roleName ?? "-",
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                color: AppColors.black,
+                              ),
+                            ),
+                          );
+                        },
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -93,6 +113,7 @@ class EditUserButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -100,13 +121,14 @@ class EditUserButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
+                        enabled: false,
                         name: 'email',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -117,6 +139,7 @@ class EditUserButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -124,13 +147,13 @@ class EditUserButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'phone_number',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -141,6 +164,7 @@ class EditUserButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -148,13 +172,22 @@ class EditUserButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
-                        name: 'address',
-                        hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                      child: TextAreaWidget(
+                        name: "address", 
+                        hintText: "", 
+                        textAreaResultC: controller.editAddressResult, 
+                        maxLength: 200,
                         borderRadius: 10,
+                        validator: Validator.list([
+                          Validator.required(),
+                          Validator.maxLength(200),
+                        ]),
+                        onChanged: (newVal) {
+                          if (newVal != "") {
+                            controller.editAddressResult.value = newVal!;
+                          }
+                        }, 
+                        keyboardType: TextInputType.text,
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:backoffice_tpt_app/model/all_user.dart';
+import 'package:backoffice_tpt_app/model/role.dart';
+import 'package:backoffice_tpt_app/model/role_detail.dart';
 import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:backoffice_tpt_app/model/user_detail.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
@@ -8,6 +10,7 @@ import 'package:backoffice_tpt_app/utills/helper/loading_helper.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/snackbar/snackbar_widget.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -22,6 +25,7 @@ class UserController extends GetxController {
   final tableKey = GlobalKey<PaginatedDataTableState>();
   final scrollController = ScrollController();
   bool isLoading = false;
+  RxBool isObscure = true.obs;
 
   List<UserData> dataList = [];
   late UserData dataObject;
@@ -32,9 +36,18 @@ class UserController extends GetxController {
   Rx<bool> loadNext = Rx(false);
   Rx<String> searchKeyword = Rx("");
 
+  RxString addAddressResult = "".obs;
+  RxString editAddressResult = "".obs;
+  RxString deleteAddressResult = "".obs;
+
+  Role? roleResult;
+  Role? role;
+
   @override
   void onInit() {
     getAllUsers();
+    getRoles();
+    update();
     super.onInit();
   }
 
@@ -108,51 +121,71 @@ class UserController extends GetxController {
 
   // [CREATE] Add New User
   void addNewUser({
-    required String roleId,
+    required int roleId,
     required String name,
     required String email,
     required String phoneNumber,
     required String address,
+    required String password,
     required BuildContext context,
   }) async {
     showLoading();
     final dio = await AppDio().getBasicDIO();
 
     try {
-      final userData = await dio.post(
-        BaseUrlLocal.user,
-        data: {
-          "role_id": int.parse(roleId),
-          "uid": "user123",
-          "name": name,
-          "email": email,
-          "address": address,
-          "phone_number": phoneNumber,
-          "profile_picture": ""
-        },
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-      debugPrint('Tambah User: ${userData.data}');
-      dismissLoading();
-      Get.back();
-      getAllUsers();
-      // ignore: use_build_context_synchronously
-      PopUpWidget.successAndFailPopUp(
-        context: context, 
-        titleString: "Success!", 
-        middleText: "User berhasil ditambahkan.", 
-        buttonText: "OK"
-      );
-    } on DioError catch (error) {
+
+      await userCredential.user!.sendEmailVerification();
+      
+      try {
+        final userData = await dio.post(
+          BaseUrlLocal.user,
+          data: {
+            "role_id": roleId,
+            "uid": userCredential.user!.uid,
+            "name": name,
+            "email": email,
+            "address": address,
+            "phone_number": phoneNumber,
+            "profile_picture": ""
+          },
+        );
+        debugPrint('Tambah User: ${userData.data}');
+        dismissLoading();
+        Get.back();
+        getAllUsers();
+        // ignore: use_build_context_synchronously
+        PopUpWidget.successAndFailPopUp(
+          context: context, 
+          titleString: "Success!", 
+          middleText: "User berhasil ditambahkan. \n Mohon lakukan verifikasi akun dengan yang sudah dikirimkan pada email : $email", 
+          buttonText: "OK"
+        );
+      } on DioError catch (error) {
+        dismissLoading();
+        SnackbarWidget.defaultSnackbar(
+          icon: const Icon(
+            Icons.cancel,
+            color: AppColors.red,
+          ),
+          title: "Error!",
+          subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+        );
+        debugPrint(error.toString());
+      }
+    } on FirebaseAuthException catch (e) {
       dismissLoading();
       SnackbarWidget.defaultSnackbar(
         icon: const Icon(
           Icons.cancel,
           color: AppColors.red,
         ),
-        title: "Error!",
-        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+        title: "Oops!", 
+        subtitle: e.message.toString()
       );
-      debugPrint(error.toString());
     }
   }
 
@@ -173,19 +206,18 @@ class UserController extends GetxController {
       dataObject = userDetailResponse.data!.user!;
       isEdit == true
       ? editUserFormKey.currentState!.patchValue({
-          "role_id": dataObject.roleId.toString(),
           "name": dataObject.name,
           "email": dataObject.email,
           "address": dataObject.address,
           "phone_number": dataObject.phoneNumber,
         })
       : deleteUserFormKey.currentState!.patchValue({
-          "role_id": dataObject.roleId.toString(),
           "name": dataObject.name,
           "email": dataObject.email,
           "address": dataObject.address,
           "phone_number": dataObject.phoneNumber,
         });
+      await getRoleDetail(roleId: dataObject.roleId);
       update();
     } on DioError catch (error) {
       debugPrint(error.toString());
@@ -196,7 +228,7 @@ class UserController extends GetxController {
   // [UPDATE] Update User
   void updateUser({
     required int userId, 
-    required String roleId,
+    required int roleId,
     required String name,
     required String email,
     required String phoneNumber,
@@ -211,7 +243,7 @@ class UserController extends GetxController {
         BaseUrlLocal.user,
         data: {
           "user_id": userId,
-          "role_id": int.parse(roleId),
+          "role_id": roleId,
           "name": name,
           "email": email,
           "address": address,
@@ -251,32 +283,88 @@ class UserController extends GetxController {
     showLoading();
     final dio = await AppDio().getDIO();
 
-    try {
-      final userData = await dio.delete(
-        BaseUrlLocal.deleteUser(userId: userId)
-      );
-      debugPrint('Delete User: ${userData.data}');
-      dismissLoading();
-      Get.back();
-      // ignore: use_build_context_synchronously
-      PopUpWidget.successAndFailPopUp(
-        context: context, 
-        titleString: "Success!", 
-        middleText: "User berhasil dihapus.", 
-        buttonText: "OK"
-      );
-      await refreshPage();
-    } on DioError catch (error) {
+    try{
+      await FirebaseAuth.instance.currentUser?.delete();
+
+      try {
+        final userData = await dio.delete(
+          BaseUrlLocal.deleteUser(userId: userId)
+        );
+        debugPrint('Delete User: ${userData.data}');
+        dismissLoading();
+        Get.back();
+        // ignore: use_build_context_synchronously
+        PopUpWidget.successAndFailPopUp(
+          context: context, 
+          titleString: "Success!", 
+          middleText: "User berhasil dihapus.", 
+          buttonText: "OK"
+        );
+        await refreshPage();
+      } on DioError catch (error) {
+        dismissLoading();
+        SnackbarWidget.defaultSnackbar(
+          icon: const Icon(
+            Icons.cancel,
+            color: AppColors.red,
+          ),
+          title: "Error!",
+          subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+        );
+        debugPrint(error.toString());
+      }
+    } on FirebaseAuthException catch (e) {
       dismissLoading();
       SnackbarWidget.defaultSnackbar(
         icon: const Icon(
           Icons.cancel,
           color: AppColors.red,
         ),
-        title: "Error!",
-        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+        title: "Oops!", 
+        subtitle: e.message.toString()
       );
+    }
+  }
+
+  // [READ] Get Roles
+  Future<List<Role>> getRoles() async {
+    final dio = await AppDio().getDIO();
+    RoleResponse? roleResponse;
+    
+    try {
+      final roleData = await dio.get(
+        BaseUrlLocal.role
+      );
+      if (roleData.data != null) {
+        roleResponse = RoleResponse.fromJson(roleData.data);
+        return roleResponse.data!.role!;
+      }
+      update();
+      return [];
+    } on DioError catch (error) {
       debugPrint(error.toString());
     }
+
+    return [];
+  }
+
+  // [READ] Get Role Detail
+  Future getRoleDetail({int? roleId}) async {
+    final dio = await AppDio().getDIO();
+    RoleDetailResponse? roleDetailResponse;
+    
+    try {
+      final roleDetailData = await dio.get(
+        BaseUrlLocal.roleByID(roleId: roleId)
+      );
+      debugPrint('Role Detail : ${roleDetailData.data}');
+      roleDetailResponse = RoleDetailResponse.fromJson(roleDetailData.data);
+      role = roleDetailResponse.data?.role!;
+      roleResult = role;
+      update();
+    } on DioError catch (error) {
+      debugPrint(error.toString());
+    }
+    update();
   }
 }

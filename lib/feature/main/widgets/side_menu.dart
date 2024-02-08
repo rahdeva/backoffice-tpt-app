@@ -65,7 +65,7 @@ class SideMenu extends StatelessWidget {
           ),
           Divider(color: AppColors.white.withOpacity(0.2)),
           Container(
-            margin: const EdgeInsets.fromLTRB(8, 24, 12, 8),
+            margin: const EdgeInsets.fromLTRB(8, 12, 12, 8),
             decoration: BoxDecoration(
               color: controller.tabIndex == 0
                 ? AppColors.primary
