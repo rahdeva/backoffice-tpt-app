@@ -41,7 +41,8 @@ class UserController extends GetxController {
   RxString deleteAddressResult = "".obs;
 
   Role? roleResult;
-  Role? role;
+  Role? editRoleResult;
+  Role? deleteRoleResult;
 
   @override
   void onInit() {
@@ -204,20 +205,25 @@ class UserController extends GetxController {
       debugPrint('User Detail : ${userData.data}');
       userDetailResponse = UserDetailResponse.fromJson(userData.data);
       dataObject = userDetailResponse.data!.user!;
-      isEdit == true
-      ? editUserFormKey.currentState!.patchValue({
-          "name": dataObject.name,
-          "email": dataObject.email,
-          "address": dataObject.address,
-          "phone_number": dataObject.phoneNumber,
-        })
-      : deleteUserFormKey.currentState!.patchValue({
+      if(isEdit == true){
+        editUserFormKey.currentState!.patchValue({
           "name": dataObject.name,
           "email": dataObject.email,
           "address": dataObject.address,
           "phone_number": dataObject.phoneNumber,
         });
-      await getRoleDetail(roleId: dataObject.roleId);
+        editRoleResult = await getRoleDetail(roleId: dataObject.roleId);
+        update(['edit-role-dropdown']);
+      } else{
+        deleteUserFormKey.currentState!.patchValue({
+          "name": dataObject.name,
+          "email": dataObject.email,
+          "address": dataObject.address,
+          "phone_number": dataObject.phoneNumber,
+        });
+        deleteRoleResult = await getRoleDetail(roleId: dataObject.roleId);
+        update(['delete-role-dropdown']);
+      }
       update();
     } on DioError catch (error) {
       debugPrint(error.toString());
@@ -349,7 +355,7 @@ class UserController extends GetxController {
   }
 
   // [READ] Get Role Detail
-  Future getRoleDetail({int? roleId}) async {
+  Future<Role?> getRoleDetail({int? roleId}) async {
     final dio = await AppDio().getDIO();
     RoleDetailResponse? roleDetailResponse;
     
@@ -359,12 +365,11 @@ class UserController extends GetxController {
       );
       debugPrint('Role Detail : ${roleDetailData.data}');
       roleDetailResponse = RoleDetailResponse.fromJson(roleDetailData.data);
-      role = roleDetailResponse.data?.role!;
-      roleResult = role;
-      update();
+      return roleDetailResponse.data?.role!;
     } on DioError catch (error) {
       debugPrint(error.toString());
     }
     update();
+    return null;
   }
 }

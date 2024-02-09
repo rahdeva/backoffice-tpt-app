@@ -49,7 +49,7 @@ class FinancialReportDataSource extends DataTableSource {
         ),
         DataCell(
           Text(
-            item.type.toString(),
+            controller.getFinancialTypeNamebyTypeId(item.type),
             style: Theme.of(context).textTheme.bodyMedium
           )
         ),
@@ -105,6 +105,7 @@ class FinancialReportDataSource extends DataTableSource {
               children: [
                 EditFinancialButton(
                   financialId: item.financialId!,
+                  userId: item.userId!,
                   controller: controller,
                 ),
                 const SizedBox(width: 12),

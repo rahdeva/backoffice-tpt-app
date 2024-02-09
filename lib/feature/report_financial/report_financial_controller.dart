@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:backoffice_tpt_app/feature/auth/auth_controller.dart';
+import 'package:backoffice_tpt_app/model/balance.dart';
 import 'package:backoffice_tpt_app/model/financial.dart';
 import 'package:backoffice_tpt_app/model/financial_detail.dart';
+import 'package:backoffice_tpt_app/model/financial_type.dart';
 import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/loading_helper.dart';
@@ -37,8 +39,15 @@ class FinancialReportController extends GetxController {
   Rx<bool> loadNext = Rx(false);
   Rx<String> searchKeyword = Rx("");
 
+  FinancialType? addfinancialTypeResult;
+  FinancialType? editfinancialTypeResult;
+  FinancialType? deletefinancialTypeResult;
+
+  int balances = 0;
+
   @override
   void onInit() {
+    getLatestBalance();
     getFinancialReports();
     super.onInit();
   }
@@ -81,6 +90,53 @@ class FinancialReportController extends GetxController {
     );  
     getFinancialReports(page: page.value);
   }
+  
+  // FinancialType List
+  List<FinancialType>? financialTypeList = [
+    FinancialType(
+      typeId: 1,
+      typeName: "Modal",
+    ),
+    FinancialType(
+      typeId: 2,
+      typeName: "Biaya Operasional"
+    ),
+    FinancialType(
+      typeId: 3,
+      typeName: "Biaya Lain-lain"
+    ),
+  ];
+
+  FinancialType? getFinancialTypeByTypeId(int typeId) {
+    return financialTypeList?.firstWhere(
+      (financialType) => financialType.typeId == typeId,
+    );
+  }
+
+  String getFinancialTypeNamebyTypeId(int? typeId) {
+    FinancialType? financialType = getFinancialTypeByTypeId(typeId!);
+    return financialType?.typeName ?? "";
+  }
+
+  // [READ] Get Balance
+  void getLatestBalance() async {
+    isLoading = true;
+    final dio = await AppDio().getDIO();
+    BalanceResponse? financialResponse;
+
+    try {
+      final balanceData = await dio.get(
+        BaseUrlLocal.financialBalance,
+      );
+      debugPrint('Financials: ${balanceData.data}');
+      financialResponse = BalanceResponse.fromJson(balanceData.data);
+      balances = financialResponse.data?.balance ?? 0;
+    } on DioError catch (error) {
+      debugPrint(error.toString());
+    }
+    isLoading = false;
+    update();
+  }
 
   // [READ] Get All Products
   Future<void> getFinancialReports({
@@ -113,8 +169,8 @@ class FinancialReportController extends GetxController {
 
   // [CREATE] Add New Financial Report
   void addNewFinancialReport({
-    required String type, 
-    required String financialDate, 
+    required int type, 
+    required DateTime financialDate, 
     required String information,
     required String cashIn, 
     required String cashOut, 
@@ -123,15 +179,17 @@ class FinancialReportController extends GetxController {
   }) async {
     showLoading();
     final dio = await AppDio().getBasicDIO();
+    DateTime financialDateUTC8 = financialDate.toUtc().add(const Duration(hours: 8));
+    String financialDateValue = financialDateUTC8.toIso8601String();
 
     try {
       final financialData = await dio.post(
         BaseUrlLocal.financial,
         data: {
           "user_id" : user?.userId,
-          "type" : int.parse(type),
+          "type" : type,
           "information" : information,
-          "financial_date": "2024-01-27T10:27:24.6881773Z",
+          "financial_date": financialDateValue,
           "cash_in" : StringFormatter.formatCurrencyNumber(cashIn),
           "cash_out" : StringFormatter.formatCurrencyNumber(cashOut),
           "balance" : StringFormatter.formatCurrencyNumber(balance),
@@ -177,33 +235,10 @@ class FinancialReportController extends GetxController {
       debugPrint('Financial Detail : ${financialDetailData.data}');
       financialDetailResponse = FinancialReportDetailResponse.fromJson(financialDetailData.data);
       dataObject = financialDetailResponse.data!.financial!;
-      isEdit == true
-      ? editFinancialReportFormKey.currentState!.patchValue({
-          "user_id" : dataObject.userId.toString(),
-          "type" : dataObject.type.toString(),
+      if(isEdit == true){
+        editFinancialReportFormKey.currentState!.patchValue({
           "information" : dataObject.information,
-          "financial_date": dataObject.financialDate.toString(),
-          "cash_in" : NumberFormat.currency(
-            locale: 'id',
-            decimalDigits: 0,
-            symbol: "Rp "
-          ).format(dataObject.cashIn),
-          "cash_out" : NumberFormat.currency(
-            locale: 'id',
-            decimalDigits: 0,
-            symbol: "Rp "
-          ).format(dataObject.cashOut),
-          "balance" : NumberFormat.currency(
-            locale: 'id',
-            decimalDigits: 0,
-            symbol: "Rp "
-          ).format(dataObject.balance),
-        })
-      : deleteFinancialReportFormKey.currentState!.patchValue({
-          "user_id" : dataObject.userId.toString(),
-          "type" : dataObject.type.toString(),
-          "information" : dataObject.information,
-          "financial_date": dataObject.financialDate.toString(),
+          "financial_date": dataObject.financialDate,
           "cash_in" : NumberFormat.currency(
             locale: 'id',
             decimalDigits: 0,
@@ -220,6 +255,31 @@ class FinancialReportController extends GetxController {
             symbol: "Rp "
           ).format(dataObject.balance),
         });
+        editfinancialTypeResult = getFinancialTypeByTypeId(dataObject.type!);
+        update(['edit-financial-type-dropdown']);
+      } else{
+        deleteFinancialReportFormKey.currentState!.patchValue({
+          "information" : dataObject.information,
+          "financial_date": dataObject.financialDate,
+          "cash_in" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashIn),
+          "cash_out" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.cashOut),
+          "balance" : NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(dataObject.balance),
+        });
+        deletefinancialTypeResult = getFinancialTypeByTypeId(dataObject.type!);
+        update(['delete-financial-type-dropdown']);
+      }
       update();
     } on DioError catch (error) {
       debugPrint(error.toString());
@@ -230,8 +290,9 @@ class FinancialReportController extends GetxController {
   // [UPDATE] Update FinancialReport
   void updateFinancialReport({
     required int financialId, 
-    required String type, 
-    required String financialDate, 
+    required int userId, 
+    required int type, 
+    required DateTime financialDate,  
     required String information,
     required String cashIn, 
     required String cashOut, 
@@ -240,16 +301,21 @@ class FinancialReportController extends GetxController {
   }) async {
     showLoading();
     final dio = await AppDio().getDIO();
+    String financialDateValue = financialDate.toIso8601String();
+    if(financialDate != dataObject.financialDate){
+      DateTime financialDateUTC8 = financialDate.toUtc().add(const Duration(hours: 8));
+      financialDateValue = financialDateUTC8.toIso8601String();
+    }
 
     try {
       final financialData = await dio.put(
         BaseUrlLocal.financial,
         data: {
           "financial_id": financialId,
-          "user_id" : user?.userId,
-          "type" : int.parse(type),
+          "user_id" : userId,
+          "type" : type,
           "information" : information,
-          "financial_date": "2024-01-27T10:27:24.6881773Z",
+          "financial_date": financialDateValue,
           "cash_in" : StringFormatter.formatCurrencyNumber(cashIn),
           "cash_out" : StringFormatter.formatCurrencyNumber(cashOut),
           "balance" : StringFormatter.formatCurrencyNumber(balance),

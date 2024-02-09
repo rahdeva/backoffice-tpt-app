@@ -1,8 +1,11 @@
 import 'package:backoffice_tpt_app/feature/report_financial/report_financial_controller.dart';
+import 'package:backoffice_tpt_app/model/financial_type.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/currency_text_input_formatter.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/datetime_picker_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/dropdown_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
@@ -10,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class DeleteFinancialButton extends StatelessWidget {
@@ -39,7 +43,7 @@ class DeleteFinancialButton extends StatelessWidget {
           financialId : financialId,
           isEdit: false
         );
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Delete Laporan", 
@@ -52,6 +56,7 @@ class DeleteFinancialButton extends StatelessWidget {
               children : [  
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -59,14 +64,15 @@ class DeleteFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
+                      child: DateTimePickerWidget(
                         enabled: false,
                         name: 'financial_date',
-                        hintText: "",
+                        inputType: InputType.both,
                         validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        lastDate: DateTime.now(),
+                        hintText: "",
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -77,31 +83,53 @@ class DeleteFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
                       label: "Jenis"
                     ),
-                    SizedBox(
-                      width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
-                        enabled: false,
-                        name: 'type',
-                        hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
-                        borderRadius: 10,
-                        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w400
-                        ),
-                      ),
+                    GetBuilder(
+                      id: 'delete-financial-type-dropdown',
+                      init: controller,
+                      builder: (_) {
+                        return SizedBox(
+                          width: 50.w - 16,
+                          child: DropdownWidget<FinancialType>(
+                            enabled: false,
+                            hintText: "",
+                            validator: Validator.required(),
+                            items: controller.financialTypeList,
+                            onChanged: (FinancialType? newValue){
+                              controller.deletefinancialTypeResult = newValue;
+                            },
+                            borderRadius: 10,
+                            selectedItem: controller.deletefinancialTypeResult,
+                            contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
+                            itemAsString: (FinancialType type) => type.typeName ?? "-",
+                            itemBuilder: (context, item, isSelected) {
+                              return ListTile(
+                                title: Text(
+                                  item.typeName ?? "-",
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                            textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -109,7 +137,6 @@ class DeleteFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         enabled: false,
                         name: 'information',
@@ -117,6 +144,7 @@ class DeleteFinancialButton extends StatelessWidget {
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -127,6 +155,7 @@ class DeleteFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -134,7 +163,6 @@ class DeleteFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         enabled: false,
                         name: 'cash_in',
@@ -142,6 +170,7 @@ class DeleteFinancialButton extends StatelessWidget {
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -159,6 +188,7 @@ class DeleteFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -166,7 +196,6 @@ class DeleteFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         enabled: false,
                         name: 'cash_out',
@@ -174,6 +203,7 @@ class DeleteFinancialButton extends StatelessWidget {
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -191,6 +221,7 @@ class DeleteFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -198,7 +229,6 @@ class DeleteFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         enabled: false,
                         name: 'balance',
@@ -206,6 +236,7 @@ class DeleteFinancialButton extends StatelessWidget {
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -224,7 +255,7 @@ class DeleteFinancialButton extends StatelessWidget {
                 const SizedBox(height: 24),
                 const SizedBox(height: 24),
                 Container(
-                  margin: const EdgeInsets.only(right: 16),
+                  margin: const EdgeInsets.only(right: 0),
                   alignment: Alignment.centerRight,
                   child: PrimaryButtonWidget(
                     customColors: AppColors.red,

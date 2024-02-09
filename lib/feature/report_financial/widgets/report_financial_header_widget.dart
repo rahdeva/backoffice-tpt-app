@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class FinancialReportHeaderWidget extends StatelessWidget {
@@ -88,6 +89,24 @@ class FinancialReportHeaderWidget extends StatelessWidget {
                 }, 
               ),
             ],
+          ),
+        ),
+        const SizedBox(width: 16),
+        Container(
+          color: AppColors.white.withOpacity(0.2),
+          width: 2,
+          height: 32,
+        ),
+        const SizedBox(width: 16),
+        Text(
+          NumberFormat.currency(
+            locale: 'id', 
+            decimalDigits: 0,
+            symbol: "Rp "
+          ).format(controller.balances),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w400
           ),
         ),
         const SizedBox(width: 16),

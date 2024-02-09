@@ -11,6 +11,7 @@ import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class EditUserButton extends StatelessWidget {
@@ -80,34 +81,40 @@ class EditUserButton extends StatelessWidget {
                     const LabelFormWidget2(
                       label: "Role"
                     ),
-                    SizedBox(
-                      width: 50.w - 16,
-                      child: DropdownSearchWidget<Role>(
-                        hintText: "",
-                        validator: Validator.required(),
-                        asyncItems: (filter) => controller.getRoles(),
-                        onChanged: (Role? newValue){
-                          controller.roleResult = newValue;
-                        },
-                        borderRadius: 10,
-                        selectedItem: controller.roleResult,
-                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
-                        itemAsString: (Role role) => role.roleName ?? "-",
-                        itemBuilder: (context, item, isSelected) {
-                          return ListTile(
-                            title: Text(
-                              item.roleName ?? "-",
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                color: AppColors.black,
-                              ),
+                    GetBuilder(
+                      id: 'edit-role-dropdown',
+                      init: controller,
+                      builder: (_) {
+                        return SizedBox(
+                          width: 50.w - 16,
+                          child: DropdownSearchWidget<Role>(
+                            hintText: "",
+                            validator: Validator.required(),
+                            asyncItems: (filter) => controller.getRoles(),
+                            onChanged: (Role? newValue){
+                              controller.editRoleResult = newValue;
+                            },
+                            borderRadius: 10,
+                            selectedItem: controller.editRoleResult,
+                            contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
+                            itemAsString: (Role role) => role.roleName ?? "-",
+                            itemBuilder: (context, item, isSelected) {
+                              return ListTile(
+                                title: Text(
+                                  item.roleName ?? "-",
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                            textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w400
                             ),
-                          );
-                        },
-                        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w400
-                        ),
-                      ),
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),

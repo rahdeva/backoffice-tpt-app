@@ -1,7 +1,9 @@
 import 'package:backoffice_tpt_app/feature/user/user_controller.dart';
+import 'package:backoffice_tpt_app/model/role.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/dropdown_search_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_area_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
@@ -9,6 +11,7 @@ import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class DeleteUserButton extends StatelessWidget {
@@ -83,21 +86,41 @@ class DeleteUserButton extends StatelessWidget {
                     const LabelFormWidget2(
                       label: "Role"
                     ),
-                    SizedBox(
-                      width: 50.w - 16,
-                      child: TextFieldWidget(
-                        enabled: false,
-                        name: 'role_id',
-                        hintText: "",
-                        validator: Validator.required(),
-                        keyboardType: TextInputType.text,
-                        borderRadius: 10,
-                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
-                        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w400
-                        ),
-                      ),
+                    GetBuilder(
+                      id: 'delete-role-dropdown',
+                      init: controller,
+                      builder: (_) {
+                        return SizedBox(
+                          width: 50.w - 16,
+                          child: DropdownSearchWidget<Role>(
+                            enabled: false,
+                            hintText: "",
+                            validator: Validator.required(),
+                            asyncItems: (filter) => controller.getRoles(),
+                            onChanged: (Role? newValue){
+                              controller.deleteRoleResult = newValue;
+                            },
+                            borderRadius: 10,
+                            selectedItem: controller.deleteRoleResult,
+                            contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
+                            itemAsString: (Role role) => role.roleName ?? "-",
+                            itemBuilder: (context, item, isSelected) {
+                              return ListTile(
+                                title: Text(
+                                  item.roleName ?? "-",
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                            textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),

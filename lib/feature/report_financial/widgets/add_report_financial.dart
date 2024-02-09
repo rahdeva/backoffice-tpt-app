@@ -1,8 +1,11 @@
 import 'package:backoffice_tpt_app/feature/report_financial/report_financial_controller.dart';
+import 'package:backoffice_tpt_app/model/financial_type.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/currency_text_input_formatter.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/datetime_picker_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/forms/dropdown_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/label_form_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
@@ -33,7 +36,7 @@ class AddFinancialButton extends StatelessWidget {
         size: 16,
       ), 
       onPressed: () {
-        PopUpWidget.defaultPopUp(
+        PopUpWidget.inputPopUp(
           context: context,
           width: 60.w,
           titleString: "Tambah Laporan Keuangan", 
@@ -46,30 +49,64 @@ class AddFinancialButton extends StatelessWidget {
               children : [  
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
                       label: "Tanggal"
                     ),
-                    SizedBox(
-                      width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
+                    Expanded(
+                      child: DateTimePickerWidget(
                         name: 'financial_date',
-                        hintText: "",
+                        inputType: InputType.both,
                         validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        lastDate: DateTime.now(),
+                        hintText: "",
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
                         ),
                       ),
                     ),
+                    const SizedBox(width: 16),
+                    SizedBox(
+                      width: 6.w,
+                      child: ElevatedButton(
+                        onPressed: (){
+                          controller.addFinancialReportFormKey.currentState!.patchValue({
+                            "financial_date": DateTime.now()
+                          });
+                        }, 
+                        style:  ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(
+                              color: AppColors.primary,
+                            )
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            "Now",
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w600
+                            ),
+                          ),
+                        )
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -77,13 +114,27 @@ class AddFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
-                      child: TextFieldWidget(
-                        name: 'type',
+                      child: DropdownWidget<FinancialType>(
                         hintText: "",
                         validator: Validator.required(),
-                        keyboardType: TextInputType.text,
+                        items: controller.financialTypeList,
+                        onChanged: (FinancialType? newValue){
+                          controller.addfinancialTypeResult = newValue;
+                        },
                         borderRadius: 10,
+                        selectedItem: controller.addfinancialTypeResult,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
+                        itemAsString: (FinancialType type) => type.typeName ?? "-",
+                        itemBuilder: (context, item, isSelected) {
+                          return ListTile(
+                            title: Text(
+                              item.typeName ?? "-",
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                color: AppColors.black,
+                              ),
+                            ),
+                          );
+                        },
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -94,6 +145,7 @@ class AddFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -101,13 +153,13 @@ class AddFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'information',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.text,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -118,6 +170,7 @@ class AddFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -125,13 +178,13 @@ class AddFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'cash_in',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -149,6 +202,7 @@ class AddFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -156,13 +210,13 @@ class AddFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'cash_out',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -180,6 +234,7 @@ class AddFinancialButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 16),
                     const LabelFormWidget2(
@@ -187,13 +242,13 @@ class AddFinancialButton extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 50.w - 16,
-                      height: 32,
                       child: TextFieldWidget(
                         name: 'balance',
                         hintText: "",
                         validator: Validator.required(),
                         keyboardType: TextInputType.number,
                         borderRadius: 10,
+                        contentPadding: const EdgeInsets.fromLTRB(12,12,12,12),
                         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.w400
@@ -212,7 +267,7 @@ class AddFinancialButton extends StatelessWidget {
                 const SizedBox(height: 24),
                 const SizedBox(height: 24),
                 Container(
-                  margin: const EdgeInsets.only(right: 16),
+                  margin: const EdgeInsets.only(right: 0),
                   alignment: Alignment.centerRight,
                   child: PrimaryButtonWidget(
                     customColors: AppColors.yellow,
@@ -227,11 +282,12 @@ class AddFinancialButton extends StatelessWidget {
                     onPressed: () {
                       if(
                         controller.addFinancialReportFormKey.currentState != null &&
-                        controller.addFinancialReportFormKey.currentState!.saveAndValidate()
+                        controller.addFinancialReportFormKey.currentState!.saveAndValidate() && 
+                        controller.addfinancialTypeResult != null
                       ){
                         controller.addNewFinancialReport(
                           financialDate: controller.addFinancialReportFormKey.currentState!.fields['financial_date']!.value,
-                          type: controller.addFinancialReportFormKey.currentState!.fields['type']!.value,
+                          type: controller.addfinancialTypeResult!.typeId!,
                           information: controller.addFinancialReportFormKey.currentState!.fields['information']!.value,
                           cashIn: controller.addFinancialReportFormKey.currentState!.fields['cash_in']!.value,
                           cashOut: controller.addFinancialReportFormKey.currentState!.fields['cash_out']!.value,

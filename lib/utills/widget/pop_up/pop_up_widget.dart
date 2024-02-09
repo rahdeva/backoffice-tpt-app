@@ -1,4 +1,5 @@
 import 'package:backoffice_tpt_app/resources/resources.dart';
+import 'package:backoffice_tpt_app/themes/app_theme.dart';
 import 'package:backoffice_tpt_app/utills/helper/validator.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_area_widget.dart';
@@ -76,21 +77,10 @@ class PopUpWidget{
             ),
           ),
           content: Theme(
-            data: ThemeData(
+            data: AppTheme.buildThemeData(true, context).copyWith(
               scrollbarTheme: const ScrollbarThemeData().copyWith(
-                thumbColor: MaterialStateProperty.all(AppColors.background1),
+                thumbColor: MaterialStateProperty.all(AppColors.background2),
               ),
-              textTheme: TextTheme(
-                displayLarge: Theme.of(context).textTheme.displayLarge,
-                displayMedium: Theme.of(context).textTheme.displayMedium,
-                displaySmall: Theme.of(context).textTheme.displaySmall,
-                headlineLarge: Theme.of(context).textTheme.headlineLarge,
-                headlineMedium: Theme.of(context).textTheme.headlineMedium,
-                headlineSmall: Theme.of(context).textTheme.headlineSmall,
-                bodyLarge: Theme.of(context).textTheme.bodyLarge,
-                bodyMedium: Theme.of(context).textTheme.bodyMedium,
-                bodySmall: Theme.of(context).textTheme.bodySmall,
-              )
             ),
             child: Scrollbar(
               thumbVisibility: true,
