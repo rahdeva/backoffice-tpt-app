@@ -21,14 +21,22 @@ class MainController extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   static MainController find = Get.find();
   final AuthController authController = AuthController.find;
-  UserData? get user => authController.user;
+  UserData? user;
   int tabIndex = 0;
   List<int> historyIndex = [];
 
   @override
   void onInit() {
+    user = authController.user;
     Utils.loadSideMenuBinding(tabIndex);
+    update();
     super.onInit();
+  }
+
+  Future<void> refreshPage() async {
+    user = authController.user;
+    update(['content', 'side-menu']);
+    update();
   }
 
   List<Widget> pageView = [

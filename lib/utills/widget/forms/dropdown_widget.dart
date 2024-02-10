@@ -59,7 +59,9 @@ class DropdownWidget<T> extends StatelessWidget {
         searchFieldProps: TextFieldProps(
           decoration: InputDecoration(
             isDense: true,
-            fillColor: Colors.transparent,
+            fillColor: enabled 
+              ? Colors.transparent
+              : AppColors.gray500,
             hintText: hintText,
             labelText: label,
             contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(12,16,12,16),
@@ -125,7 +127,9 @@ class DropdownWidget<T> extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         dropdownSearchDecoration: InputDecoration(
           isDense: true,
-          fillColor: Colors.transparent,
+          fillColor: enabled 
+            ? Colors.transparent
+            : AppColors.gray500,
           hintText: hintText,
           labelText: label,
           contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(12,16,12,16),

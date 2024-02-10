@@ -59,6 +59,7 @@ class FinancialReportController extends GetxController {
     searchformKey.currentState?.reset();
     searchKeyword.value = "";
     tableKey.currentState?.pageTo(1);
+    getLatestBalance();
     await getFinancialReports();
     update();
   }

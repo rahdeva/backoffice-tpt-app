@@ -74,6 +74,10 @@ class AuthController extends GetxController {
     await secureStorage.setToken(value: token);
   }
 
+  Future<void> changeUserData({required UserData user}) async {
+    await storage.write(StorageName.USERS, user.toJson());
+  }
+
   Future<void> signOut() async {
     await secureStorage.setToken(value: '');
     await storage.clearAll();

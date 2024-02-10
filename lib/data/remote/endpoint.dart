@@ -4,7 +4,7 @@
 class Environments {
   static const String PRODUCTION = '';
   static const String DEV = 'http://188.166.210.146:4009/jdi/api/v1';
-  static const String LOCAL = 'http://192.168.1.14:4000/api/v1';
+  static const String LOCAL = 'http://192.168.1.16:4000/api/v1';
 
   static String currentEnvironments = Environments.DEV;
 

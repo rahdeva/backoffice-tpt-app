@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
     projectId: 'toko-perlengkapan-ternak',
     authDomain: 'toko-perlengkapan-ternak.firebaseapp.com',
     storageBucket: 'toko-perlengkapan-ternak.appspot.com',
-    measurementId: 'G-F0E554D3EG',
+    measurementId: 'G-X36V2T77FV',
   );
 
   static const FirebaseOptions android = FirebaseOptions(

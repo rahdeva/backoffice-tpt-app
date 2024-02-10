@@ -56,9 +56,14 @@ class SideMenu extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(width: 8),
-                Text(
-                  controller.user?.name ?? "User",
-                  style: const TextStyle(color: Colors.white),
+                Flexible(
+                  child: Text(
+                    controller.user?.name ?? "User",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -10,6 +10,7 @@ class DropdownSearchWidget<T> extends StatelessWidget {
     required this.onChanged,
     this.label,
     this.enabled = true,
+    this.filled = false,
     this.showSearchBox = true,
     this.borderRadius = 4,
     this.hintStyle,
@@ -19,13 +20,16 @@ class DropdownSearchWidget<T> extends StatelessWidget {
     this.itemAsString, 
     this.contentPadding,
     this.textStyle,
+    this.fillColor,
   }) : super(key: key);
 
   final String hintText;
   final String? label;
   final bool enabled;
+  final bool filled;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
+  final Color? fillColor;
   final double borderRadius;
   final bool showSearchBox;
   final EdgeInsetsGeometry? contentPadding;
@@ -56,7 +60,11 @@ class DropdownSearchWidget<T> extends StatelessWidget {
         searchFieldProps: TextFieldProps(
           decoration: InputDecoration(
             isDense: true,
-            fillColor: Colors.transparent,
+            fillColor: enabled 
+              ? filled
+                ? AppColors.white
+                : Colors.transparent
+              : AppColors.gray500,
             hintText: hintText,
             labelText: label,
             contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(12,16,12,16),
@@ -122,7 +130,13 @@ class DropdownSearchWidget<T> extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         dropdownSearchDecoration: InputDecoration(
           isDense: true,
-          fillColor: Colors.transparent,
+          fillColor: fillColor ?? (
+            (enabled) 
+              ? filled
+                ? AppColors.white
+                : Colors.transparent
+              : AppColors.gray500
+          ),
           hintText: hintText,
           labelText: label,
           contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(12,16,12,16),

@@ -16,6 +16,7 @@ class TextFieldWidget extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.borderRadius = 4,
     this.onChanged,
+    this.fillColor,
     this.validator, 
     this.suffixIcon, 
     this.prefixIcon,
@@ -35,6 +36,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextStyle? hintStyle;
   final bool enabled;
   final bool filled;
+  final Color? fillColor;
   final bool obsecure;
   final String? initialValue;
   final double borderRadius;
@@ -63,11 +65,13 @@ class TextFieldWidget extends StatelessWidget {
         fontWeight: FontWeight.w400
       ),
       decoration: InputDecoration(
-        fillColor: enabled 
-          ? filled
-            ? AppColors.white
-            : Colors.transparent
-          : AppColors.gray500,
+        fillColor: fillColor ?? (
+            (enabled) 
+              ? filled
+                ? AppColors.white
+                : Colors.transparent
+              : AppColors.gray500
+          ),
         labelText: label,
         hintText: hintText,
         prefixIcon: prefixIcon,
