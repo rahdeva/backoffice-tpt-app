@@ -1,6 +1,7 @@
 import 'package:backoffice_tpt_app/feature/report_sale/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/widgets/delete_report_sale.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/widgets/view_report_sale_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:backoffice_tpt_app/model/sale.dart';
@@ -78,20 +79,22 @@ class SaleReportDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
+                ViewSaleDetailButton(
+                  sale: item,
+                  controller: controller
+                ),
+                const SizedBox(width: 12),
+                // Later
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.blue,
+                  customColors: AppColors.orange,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "View", 
+                  buttonText: "Edit", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
+                // Later
                 PrimaryButtonWidget(
                   width: 5.w,
                   customColors: AppColors.pink,
@@ -106,19 +109,10 @@ class SaleReportDataSource extends DataTableSource {
                   onPressed: () {},
                 ),
                 const SizedBox(width: 12),
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.red,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "Delete", 
-                  withIcon: true,
-                  icon: const Icon(
-                    IconlyLight.delete,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
-                ),
+                DeleteSaleButton(
+                  saleId: item.saleId!,
+                  controller: controller
+                )
               ],
             ),
           ),

@@ -277,7 +277,7 @@ class EditFinancialButton extends StatelessWidget {
                 const SizedBox(height: 24),
                 const SizedBox(height: 24),
                 Container(
-                  margin: const EdgeInsets.only(right: 16),
+                  margin: const EdgeInsets.only(right: 0),
                   alignment: Alignment.centerRight,
                   child: PrimaryButtonWidget(
                     customColors: AppColors.green,

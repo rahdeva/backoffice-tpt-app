@@ -28,15 +28,7 @@ class SupplierTableWidget extends StatelessWidget {
                 child: Theme(
                   data: ThemeData(
                     cardTheme: Theme.of(context).cardTheme,
-                    textTheme: TextTheme(
-                      displayLarge: Theme.of(context).textTheme.displayLarge,
-                      displayMedium: Theme.of(context).textTheme.displayMedium,
-                      displaySmall: Theme.of(context).textTheme.displaySmall,
-                      headlineLarge: Theme.of(context).textTheme.headlineLarge,
-                      headlineMedium: Theme.of(context).textTheme.headlineMedium,
-                      headlineSmall: Theme.of(context).textTheme.headlineSmall,
-                      bodyLarge: Theme.of(context).textTheme.bodyLarge,
-                      bodyMedium: Theme.of(context).textTheme.bodyMedium,
+                    textTheme: Theme.of(context).textTheme.copyWith(
                       bodySmall: Theme.of(context).textTheme.titleSmall,
                     )
                   ),

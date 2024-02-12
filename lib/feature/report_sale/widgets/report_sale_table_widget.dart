@@ -1,16 +1,16 @@
-import 'package:backoffice_tpt_app/feature/category/category_controller.dart';
-import 'package:backoffice_tpt_app/feature/category/widgets/category_data_table.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/widgets/report_sale_data_table.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/table/data_column_widget.dart';
 import 'package:flutter/material.dart';
 
-class CategoryTableWidget extends StatelessWidget {
-  const CategoryTableWidget({
+class SaleReportTableWidget extends StatelessWidget {
+  const SaleReportTableWidget({
     super.key,
     required this.controller
   });
 
-  final CategoryController controller;
+  final SaleReportController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class CategoryTableWidget extends StatelessWidget {
                     key: controller.tableKey,
                     columnSpacing : 0,
                     rowsPerPage: controller.pageSize.value,
-                    availableRowsPerPage: const [5, 10, 25],
+                    availableRowsPerPage: const [10, 25, 50],
                     headingRowHeight: 46,
                     onRowsPerPageChanged: (value) {
                       controller.onRowsPerPageChanged(value!);
@@ -52,19 +52,22 @@ class CategoryTableWidget extends StatelessWidget {
                         context, labelText: "No"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Kode Kategori"
+                        context, labelText: "Tanggal"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Nama Kategori"
+                        context, labelText: "Total Item"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Warna Kategori"
+                        context, labelText: "Total Price"
+                      ),
+                      dataColumnWidget(
+                        context, labelText: "User"
                       ),
                       dataColumnWidget(
                         context, labelText: "Aksi"
                       ),
                     ],
-                    source: CategoryDataSource(
+                    source: SaleReportDataSource(
                       data: controller.dataList,
                       controller: controller,
                       context: context

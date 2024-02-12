@@ -128,7 +128,7 @@ class DeleteCategoryButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Container(
-                  margin: const EdgeInsets.only(right: 16),
+                  margin: const EdgeInsets.only(right: 0),
                   alignment: Alignment.centerRight,
                   child: PrimaryButtonWidget(
                     customColors: AppColors.red,

@@ -84,6 +84,7 @@ class SaleDetail {
     int? saleDetailId;
     int? saleId;
     int? productId;
+    String? productCode;
     String? productName;
     int? salePrice;
     int? quantity;
@@ -95,6 +96,7 @@ class SaleDetail {
         this.saleDetailId,
         this.saleId,
         this.productId,
+        this.productCode,
         this.productName,
         this.salePrice,
         this.quantity,
@@ -107,6 +109,7 @@ class SaleDetail {
         saleDetailId: json["sale_detail_id"],
         saleId: json["sale_id"],
         productId: json["product_id"],
+        productCode: json["product_code"],
         productName: json["product_name"],
         salePrice: json["sale_price"],
         quantity: json["quantity"],
@@ -119,6 +122,7 @@ class SaleDetail {
         "sale_detail_id": saleDetailId,
         "sale_id": saleId,
         "product_id": productId,
+        "product_code": productCode,
         "product_name": productName,
         "sale_price": salePrice,
         "quantity": quantity,

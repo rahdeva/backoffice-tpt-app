@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:backoffice_tpt_app/feature/auth/auth_controller.dart';
 import 'package:backoffice_tpt_app/model/balance.dart';
 import 'package:backoffice_tpt_app/model/financial.dart';
@@ -139,7 +138,7 @@ class FinancialReportController extends GetxController {
     update();
   }
 
-  // [READ] Get All Products
+  // [READ] Get All Financials
   Future<void> getFinancialReports({
     String? keyword,
     int page = 1,

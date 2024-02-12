@@ -1,16 +1,16 @@
-import 'package:backoffice_tpt_app/feature/category/category_controller.dart';
-import 'package:backoffice_tpt_app/feature/category/widgets/category_data_table.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_sale/widgets/report_sale_detail_data_table.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/table/data_column_widget.dart';
 import 'package:flutter/material.dart';
 
-class CategoryTableWidget extends StatelessWidget {
-  const CategoryTableWidget({
+class SaleReportDetailTableWidget extends StatelessWidget {
+  const SaleReportDetailTableWidget({
     super.key,
     required this.controller
   });
 
-  final CategoryController controller;
+  final SaleReportController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,12 @@ class CategoryTableWidget extends StatelessWidget {
       child: (controller.isLoading)
         ? const Center(child: CircularProgressIndicator())
         : Scrollbar(
-            thumbVisibility: true,
+            thumbVisibility: false,
             child: SingleChildScrollView(
-              controller: controller.scrollController,
+              controller: controller.scrollController2,
               child: Container(
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                padding: const EdgeInsets.only(right: 24),
+                padding: const EdgeInsets.only(right: 0),
                 width: double.infinity,
                 child: Theme(
                   data: ThemeData(
@@ -33,16 +33,16 @@ class CategoryTableWidget extends StatelessWidget {
                     )
                   ),
                   child: PaginatedDataTable(
-                    key: controller.tableKey,
+                    key: controller.tableDetailKey,
                     columnSpacing : 0,
-                    rowsPerPage: controller.pageSize.value,
-                    availableRowsPerPage: const [5, 10, 25],
+                    rowsPerPage: controller.detailPageSize.value,
+                    availableRowsPerPage: const [8, 10, 15],
                     headingRowHeight: 46,
                     onRowsPerPageChanged: (value) {
-                      controller.onRowsPerPageChanged(value!);
+                      controller.onDetailRowsPerPageChanged(value!);
                     },
                     onPageChanged: (value) {
-                      controller.onPageChanged(value);
+                      controller.onDetailPageChanged(value);
                     },
                     headingRowColor: MaterialStateProperty.resolveWith(
                       (states) => AppColors.primary
@@ -52,20 +52,26 @@ class CategoryTableWidget extends StatelessWidget {
                         context, labelText: "No"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Kode Kategori"
+                        context, labelText: "Kode Produk"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Nama Kategori"
+                        context, labelText: "Nama Produk"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Warna Kategori"
+                        context, labelText: "Harga Jual"
                       ),
                       dataColumnWidget(
-                        context, labelText: "Aksi"
+                        context, labelText: "Jumlah"
                       ),
+                      dataColumnWidget(
+                        context, labelText: "SubTotal"
+                      ),
+                      // dataColumnWidget(
+                      //   context, labelText: "Aksi"
+                      // ),
                     ],
-                    source: CategoryDataSource(
-                      data: controller.dataList,
+                    source: SaleReportDetailDataSource(
+                      data: controller.detailDataList,
                       controller: controller,
                       context: context
                     ),
