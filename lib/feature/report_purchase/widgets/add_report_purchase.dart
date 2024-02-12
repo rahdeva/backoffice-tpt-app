@@ -1,4 +1,4 @@
-import 'package:backoffice_tpt_app/feature/report_sale/report_sale_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
@@ -16,13 +16,13 @@ import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 // import 'package:flutter_form_builder/flutter_form_builder.dart';
 // import 'package:sizer/sizer.dart';
 
-class AddSaleButton extends StatelessWidget {
-  const AddSaleButton({
+class AddPurchaseButton extends StatelessWidget {
+  const AddPurchaseButton({
     super.key,
     required this.controller,
   });
 
-  final SaleReportController controller;
+  final PurchaseReportController controller;
 
   @override
   Widget build(BuildContext context) {

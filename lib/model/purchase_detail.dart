@@ -84,6 +84,7 @@ class PurchaseDetail {
     int? purchaseDetailId;
     int? purchaseId;
     int? productId;
+    String? productCode;
     String? productName;
     int? purchasePrice;
     int? quantity;
@@ -95,6 +96,7 @@ class PurchaseDetail {
         this.purchaseDetailId,
         this.purchaseId,
         this.productId,
+        this.productCode,
         this.productName,
         this.purchasePrice,
         this.quantity,
@@ -107,6 +109,7 @@ class PurchaseDetail {
         purchaseDetailId: json["purchase_detail_id"],
         purchaseId: json["purchase_id"],
         productId: json["product_id"],
+        productCode: json["product_code"],
         productName: json["product_name"],
         purchasePrice: json["purchase_price"],
         quantity: json["quantity"],
@@ -119,6 +122,7 @@ class PurchaseDetail {
         "purchase_detail_id": purchaseDetailId,
         "purchase_id": purchaseId,
         "product_id": productId,
+        "product_code": productCode,
         "product_name": productName,
         "purchase_price": purchasePrice,
         "quantity": quantity,

@@ -1,7 +1,8 @@
 import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_controller.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/widgets/delete_report_purchase.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/widgets/view_report_purchase_detail.dart';
 import 'package:backoffice_tpt_app/model/purchase.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
@@ -83,33 +84,24 @@ class PurchaseReportDataSource extends DataTableSource {
             margin: const EdgeInsets.all(8),
             child: Row(
               children: [
-                PrimaryButtonWidget(
-                  width: 5.w,
-                  customColors: AppColors.blue,
-                  margin: const EdgeInsets.all(0),
-                  buttonText: "View", 
-                  withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
-                  onPressed: () {},
+                ViewPurchaseDetailButton(
+                  purchase: item,
+                  controller: controller
                 ),
                 const SizedBox(width: 12),
                 PrimaryButtonWidget(
                   width: 5.w,
-                  customColors: AppColors.pink,
+                  customColors: AppColors.orange,
                   margin: const EdgeInsets.all(0),
-                  buttonText: "Print", 
+                  buttonText: "Edit", 
                   withIcon: true,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.print,
-                    color: AppColors.white,
-                    size: 16,
-                  ), 
                   onPressed: () {},
                 ),
+                const SizedBox(width: 12),
+                DeletePurchaseButton(
+                  purchaseId: item.purchaseId!,
+                  controller: controller
+                )
               ],
             ),
           ),
