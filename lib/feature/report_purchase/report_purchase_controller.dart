@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:backoffice_tpt_app/model/purchase.dart';
 import 'package:backoffice_tpt_app/model/purchase_detail.dart';
+import 'package:backoffice_tpt_app/model/supplier.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/helper/loading_helper.dart';
 import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
@@ -15,18 +16,22 @@ import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
 
 class PurchaseReportController extends GetxController {
   final GlobalKey<FormBuilderState> searchformKey = GlobalKey<FormBuilderState>();
-  final GlobalKey<FormBuilderState> addSaleReportFormKey = GlobalKey<FormBuilderState>();
-  final GlobalKey<FormBuilderState> editSaleReportFormKey = GlobalKey<FormBuilderState>();
-  final GlobalKey<FormBuilderState> deleteSaleReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> addPurchaseReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> editPurchaseReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> deletePurchaseReportFormKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> searchSupplierformKey = GlobalKey<FormBuilderState>();
   final tableKey = GlobalKey<PaginatedDataTableState>();
   final tableDetailKey = GlobalKey<PaginatedDataTableState>();
+  final tableSupplierKey = GlobalKey<PaginatedDataTableState>();
   final scrollController = ScrollController();
   final scrollController2 = ScrollController();
+  final scrollController3 = ScrollController();
   bool isLoading = false;
 
   List<Purchase> dataList = [];
   Purchase? purchaseDetail;
   List<PurchaseDetail> detailDataList = [];
+  List<Supplier> supplierDataList = [];
 
   Rx<int> page = Rx(1);
   Rx<int> totalItems = Rx(0);
@@ -37,6 +42,12 @@ class PurchaseReportController extends GetxController {
   Rx<int> detailTotalItems = Rx(0);
   Rx<int> detailPageSize = Rx(8);
   Rx<bool> detailLoadNext = Rx(false);
+
+  Rx<int> chooseSupplierPage = Rx(1);
+  Rx<int> chooseSupplierTotalItems = Rx(0);
+  Rx<int> chooseSupplierPageSize = Rx(8);
+  Rx<bool> chooseSupplierLoadNext = Rx(false);
+  Rx<String> searchSupplierKeyword = Rx("");
 
   @override
   void onInit() {
@@ -66,6 +77,14 @@ class PurchaseReportController extends GetxController {
     detailDataList.clear();
     tableDetailKey.currentState?.pageTo(1);
     getPurchasesDetail();
+  }
+
+  void onSupplierRowsPerPageChanged(value){
+    chooseSupplierPageSize.value = value;
+    chooseSupplierPage.value = 1;
+    supplierDataList.clear();
+    tableSupplierKey.currentState?.pageTo(1);
+    getAllSuppliers();
   }
 
   void onPageChanged(value){
@@ -106,6 +125,26 @@ class PurchaseReportController extends GetxController {
       ),
     );  
     getPurchasesDetail(page: detailPage.value);
+  }
+
+  void onSupplierPageChanged(value){
+    if(value == 1){
+      chooseSupplierPage.value = 1;
+    } else{
+      int chooseSupplierCurrentPage = (value / chooseSupplierPageSize.value).ceil();
+      debugPrint('Current Page: ${chooseSupplierPage.value}');
+      debugPrint('Next Page: ${chooseSupplierCurrentPage + 1}');
+      chooseSupplierPage.value = chooseSupplierCurrentPage + 1;
+      chooseSupplierLoadNext.value = true;
+    }
+    Timer(
+      const Duration(seconds: 0), 
+      () => scrollController3.animateTo(
+        0.0, curve: Curves.easeOut, 
+        duration: const Duration(milliseconds: 300)
+      ),
+    );  
+    getAllSuppliers(page: chooseSupplierPage.value);
   }
 
   // [READ] Get All Purchases
@@ -201,5 +240,35 @@ class PurchaseReportController extends GetxController {
       );
       debugPrint(error.toString());
     }
+  }
+
+  // [READ] Get All Suppliers
+  Future<void> getAllSuppliers({
+    String? keyword,
+    int page = 1,
+  }) async {
+    isLoading = true;
+    final dio = await AppDio().getDIO();
+    SupplierResponse? supplierResponse;
+
+    try {
+      final supplierData = await dio.get(
+        "${BaseUrlLocal.supplier}?keyword=${keyword ?? ""}&pageSize=${chooseSupplierPageSize.value}&page=$chooseSupplierPage",
+      );
+      debugPrint('Suppliers: ${supplierData.data}');
+      supplierResponse = SupplierResponse.fromJson(supplierData.data);
+      if(chooseSupplierLoadNext.value == true){
+        supplierDataList.addAll(supplierResponse.data!.supplier ?? []); 
+        chooseSupplierLoadNext.value = false;
+      } else{
+        supplierDataList = supplierResponse.data!.supplier ?? [];
+      }
+      chooseSupplierTotalItems.value = supplierResponse.data!.meta!.totalItems!;
+    } on DioError catch (error) {
+      debugPrint(error.toString());
+    }
+    isLoading = false;
+    update();
+    update(["supplier-table"]);
   }
 }

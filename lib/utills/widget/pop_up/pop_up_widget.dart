@@ -46,8 +46,8 @@ class PopUpWidget{
           : content ?? const SizedBox()
       ),
     );
-  
   }
+  
   // Default Pop Up
   static Future<void> inputPopUp({
     required BuildContext context,

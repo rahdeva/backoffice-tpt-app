@@ -11,6 +11,8 @@ import 'package:backoffice_tpt_app/feature/product/product_binding.dart';
 import 'package:backoffice_tpt_app/feature/product/product_page.dart';
 import 'package:backoffice_tpt_app/feature/report_financial/report_financial_binding.dart';
 import 'package:backoffice_tpt_app/feature/report_financial/report_financial_page.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/add_purchase/add_purchase_binding.dart';
+import 'package:backoffice_tpt_app/feature/report_purchase/add_purchase/add_purchase_page.dart';
 import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_binding.dart';
 import 'package:backoffice_tpt_app/feature/report_purchase/report_purchase_page.dart';
 import 'package:backoffice_tpt_app/feature/report_sale/report_sale_binding.dart';
@@ -101,6 +103,11 @@ class PageRoutes {
       name: PageName.REPORT_PURCHASE,
       page: () => const PurchaseReportPage(),
       binding: PurchaseReportBinding()
+    ),
+    GetPage(
+      name: PageName.ADD_REPORT_PURCHASE,
+      page: () => const AddPurchaseReportPage(),
+      binding: AddPurchaseReportBinding()
     ),
     GetPage(
       name: PageName.REPORT_FINANCIAL,

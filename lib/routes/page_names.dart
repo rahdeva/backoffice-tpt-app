@@ -12,6 +12,7 @@ class PageName {
   static const USER = "/user";
   static const REPORT_SALE = "/report-sale";
   static const REPORT_PURCHASE = "/report-purchase";
+  static const ADD_REPORT_PURCHASE = "/add-report-purchase";
   static const REPORT_FINANCIAL = "/report-financial";
   static const DASHBOARD_TRANSACTION = "/dashboard-transaction";
   static const DASHBOARD_FINANCIAL = "/dashboard-financial";
