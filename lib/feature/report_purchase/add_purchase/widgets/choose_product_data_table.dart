@@ -4,6 +4,7 @@ import 'package:backoffice_tpt_app/resources/resources.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
@@ -114,6 +115,8 @@ class ChooseProductDataSource extends DataTableSource {
                 size: 16,
               ),
               onPressed: () {
+                controller.addPurchasingData(item);
+                Get.back();
               },
             ),
           ),
