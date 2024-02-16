@@ -51,7 +51,10 @@ class AddPurchaseReportPage extends StatelessWidget {
                                   Icons.arrow_back, 
                                   color: AppColors.backgroundWhite
                                 ),
-                                onPressed: () => Get.back()
+                                onPressed: () {
+                                  Get.back();
+                                  Get.back();
+                                }
                               ), 
                               const SizedBox(width: 16),
                               Text(
@@ -254,17 +257,19 @@ class AddPurchaseReportPage extends StatelessWidget {
                                             fontWeight: FontWeight.w500
                                           ),
                                         ),
-                                        Text(
-                                          ":   ${NumberFormat.currency(
-                                            locale: 'id', 
-                                            decimalDigits: 0,
-                                            symbol: "Rp "
-                                          ).format(controller.total.value)}",
-                                          textAlign: TextAlign.left,
-                                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                            fontSize: 24,
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w700
+                                        Obx(
+                                          () => Text(
+                                            ":   ${NumberFormat.currency(
+                                              locale: 'id', 
+                                              decimalDigits: 0,
+                                              symbol: "Rp "
+                                            ).format(controller.total.value)}",
+                                            textAlign: TextAlign.left,
+                                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              fontSize: 24,
+                                              color: AppColors.black,
+                                              fontWeight: FontWeight.w700
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -289,23 +294,16 @@ class AddPurchaseReportPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600
                                 ),
                                 onPressed: () {
-                                //   if(
-                                //     controller.editFinancialReportFormKey.currentState != null &&
-                                //     controller.editFinancialReportFormKey.currentState!.saveAndValidate() &&
-                                //     controller.editfinancialTypeResult != null
-                                //   ){
-                                //     controller.updateFinancialReport(
-                                //       financialId: financialId,
-                                //       userId: userId,
-                                //       financialDate: controller.editFinancialReportFormKey.currentState!.fields['financial_date']!.value,
-                                //       type: controller.editfinancialTypeResult!.typeId!,
-                                //       information: controller.editFinancialReportFormKey.currentState!.fields['information']!.value,
-                                //       cashIn: controller.editFinancialReportFormKey.currentState!.fields['cash_in']!.value,
-                                //       cashOut: controller.editFinancialReportFormKey.currentState!.fields['cash_out']!.value,
-                                //       balance: controller.editFinancialReportFormKey.currentState!.fields['balance']!.value,
-                                //       context: context
-                                //     );
-                                //   }
+                                  if(
+                                    controller.addPurchaseFormKey.currentState != null &&
+                                    controller.addPurchaseFormKey.currentState!.saveAndValidate() &&
+                                    controller.purchasingDataList.isNotEmpty
+                                  ){
+                                    controller.addNewPurchase(
+                                      purchaseDate: controller.addPurchaseFormKey.currentState!.fields['purchase_date']!.value,
+                                      context: context
+                                    );
+                                  }
                                 }
                               ),
                             ],

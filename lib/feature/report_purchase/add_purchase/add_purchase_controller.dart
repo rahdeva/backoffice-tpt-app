@@ -2,12 +2,17 @@ import 'dart:async';
 
 import 'package:backoffice_tpt_app/data/remote/dio.dart';
 import 'package:backoffice_tpt_app/data/remote/endpoint.dart';
+import 'package:backoffice_tpt_app/feature/auth/auth_controller.dart';
 import 'package:backoffice_tpt_app/model/product.dart';
 import 'package:backoffice_tpt_app/model/purchase.dart';
 import 'package:backoffice_tpt_app/model/supplier.dart';
+import 'package:backoffice_tpt_app/model/user.dart';
 import 'package:backoffice_tpt_app/resources/resources.dart';
+import 'package:backoffice_tpt_app/utills/helper/loading_helper.dart';
 import 'package:backoffice_tpt_app/utills/widget/button/primary_button.dart';
 import 'package:backoffice_tpt_app/utills/widget/forms/text_field_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/pop_up/pop_up_widget.dart';
+import 'package:backoffice_tpt_app/utills/widget/snackbar/snackbar_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +28,8 @@ class AddPurchaseReportController extends GetxController {
   final tableProductKey = GlobalKey<PaginatedDataTableState>();
   final purchasingKey = GlobalKey<PaginatedDataTableState>();
   final scrollController2 = ScrollController();
+  final AuthController authController = AuthController.find;
+  UserData? get user => authController.user;
   bool isLoading = false;
 
   Purchase? purchaseDetail;
@@ -37,12 +44,15 @@ class AddPurchaseReportController extends GetxController {
   Rx<String> searchProductKeyword = Rx("");
 
   List<DataRow> purchasingDataList = [];
+  List<int> purchaseProductIdDataList = [];
+  List<int> purchasePriceDataList = [];
   List<int> totalItemDataList = [];
   List<int> subTotalDataList = [];
   List<GlobalKey<FormBuilderState>> purchasingFormKeys = [];
   Rx<int> purchasingIndex = Rx(0);
 
-  Rx<int> total = Rx(0);
+  List<Map<String, dynamic>> purchasesDetail = [];
+  Rx<int> total = Rx(0);  
 
   @override
   void onInit() {
@@ -113,8 +123,11 @@ class AddPurchaseReportController extends GetxController {
   ) {
     purchasingIndex.value = purchasingDataList.length;
     int idx = purchasingIndex.value;
+    purchaseProductIdDataList.insert(idx, choosenProduct.productId ?? 0);
+    purchasePriceDataList.insert(idx, choosenProduct.purchasePrice ?? 0);
     totalItemDataList.insert(idx, 1);
     subTotalDataList.insert(idx, choosenProduct.purchasePrice ?? 0);
+    updateTotalPrice();
     purchasingFormKeys.insert(idx, GlobalKey<FormBuilderState>());
     purchasingDataList.add(
       DataRow(
@@ -209,6 +222,7 @@ class AddPurchaseReportController extends GetxController {
                             = totalItemDataList[idx] * choosenProduct.purchasePrice!;
                           update(["total-${idx + 1}"]);
                           update();
+                          updateTotalPrice();
                         },
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly,
@@ -245,6 +259,7 @@ class AddPurchaseReportController extends GetxController {
                                 subTotalDataList[idx] 
                                   = totalItemDataList[idx] * choosenProduct.purchasePrice!;
                                 update();
+                                updateTotalPrice();
                               },
                             ),
                           ),
@@ -264,6 +279,7 @@ class AddPurchaseReportController extends GetxController {
                                 );
                                 subTotalDataList[idx] = 
                                   totalItemDataList[idx] * choosenProduct.purchasePrice!;
+                                updateTotalPrice();
                               }
                               update();
                             },
@@ -312,6 +328,7 @@ class AddPurchaseReportController extends GetxController {
                   size: 16,
                 ), 
                 onPressed: () {
+                  deletePurchasingItem(idx);
                 },
               ),
             ),
@@ -321,5 +338,104 @@ class AddPurchaseReportController extends GetxController {
     );
     update();
     update(["purchase-table"]);
+    print("purchaseProductIdDataList");
+    print(purchaseProductIdDataList);
+    print("purchasePriceDataList");
+    print(purchasePriceDataList);
+    print("totalItemDataList");
+    print(totalItemDataList);
+    print("subTotalDataList");
+    print(subTotalDataList);
+
+    
+  }
+
+  void updateTotalPrice(){
+    total.value = 0;
+    for (int subtotal in subTotalDataList) {
+      total.value += subtotal;
+    }
+    update();
+  }
+
+  void deletePurchasingItem(int index){
+    purchaseProductIdDataList.removeAt(index);
+    purchasePriceDataList.removeAt(index);
+    totalItemDataList.removeAt(index);
+    subTotalDataList.removeAt(index);
+    purchasingFormKeys.removeAt(index);
+    purchasingDataList.removeAt(index - 1);
+    update();
+    update(["purchase-table"]);
+  }
+
+  // [CREATE] Add New Purchase
+  void addNewPurchase({
+    required DateTime purchaseDate, 
+    required BuildContext context,
+  }) async {
+    showLoading();
+    final dio = await AppDio().getBasicDIO();
+    DateTime purchaseDateUTC8 = purchaseDate.toUtc().add(const Duration(hours: 8));
+    String purchaseDateValue = purchaseDateUTC8.toIso8601String();
+
+    purchasesDetail.clear();
+    for (int i = 0; i < purchaseProductIdDataList.length; i++) {
+      Map<String, dynamic> purchaseDetail = {
+        "product_id": purchaseProductIdDataList[i],
+        "purchase_price": purchasePriceDataList[i],
+        "quantity": totalItemDataList[i],
+        "subtotal": subTotalDataList[i]
+      };
+      purchasesDetail.add(purchaseDetail);
+    }
+
+    print("user_id");
+    print(user?.userId);
+    print("purchaseDateValue");
+    print(purchaseDateValue);
+    print("supplierChoosen?.supplierId");
+    print(supplierChoosen?.supplierId);
+    print("total_item");
+    print(purchasingDataList.length);
+    print("total_price");
+    print(total.value);
+    print("purchasesDetail");
+    print(purchasesDetail);
+
+    try {
+      final purchaseData = await dio.post(
+        BaseUrlLocal.purchase,
+        data: {
+          "user_id" : user?.userId,
+          "purchase_date": purchaseDateValue,
+          "supplier_id": supplierChoosen?.supplierId,
+          "total_item": purchasingDataList.length,
+          "total_price": total.value,
+          "purchases_detail": purchasesDetail,
+        },
+      );
+      debugPrint('Tambah Laporan: ${purchaseData.data}');
+      dismissLoading();
+      Get.back();
+      // ignore: use_build_context_synchronously
+      PopUpWidget.successAndFailPopUp(
+        context: context, 
+        titleString: "Success!", 
+        middleText: "Laporan berhasil ditambahkan.", 
+        buttonText: "OK"
+      );
+    } on DioError catch (error) {
+      dismissLoading();
+      SnackbarWidget.defaultSnackbar(
+        icon: const Icon(
+          Icons.cancel,
+          color: AppColors.red,
+        ),
+        title: "Error!",
+        subtitle: "${error.response!.statusCode.toString()} - ${error.response!.statusMessage.toString()}",
+      );
+      debugPrint(error.toString());
+    }
   }
 }
